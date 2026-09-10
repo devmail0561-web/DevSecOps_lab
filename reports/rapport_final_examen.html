@@ -5,582 +5,1604 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rapport de Sécurité — Examen Final — UNCHK 2024–2025</title>
 <style>
-  @page { size: A4; margin: 20mm 18mm; }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 11px; color: #1a1a2e; line-height: 1.55; background: #fff; }
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Cover page */
-  .cover { page-break-after: always; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 270mm; text-align: center; border: 3px solid #1a3a5c; padding: 30px; }
-  .cover .logo { font-size: 28px; font-weight: 900; color: #1a3a5c; letter-spacing: 2px; margin-bottom: 8px; }
-  .cover .school { font-size: 13px; color: #555; margin-bottom: 35px; }
-  .cover .title-main { font-size: 22px; font-weight: 800; color: #1a3a5c; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; border-top: 2px solid #dc3545; border-bottom: 2px solid #dc3545; padding: 12px 0; }
-  .cover .title-sub { font-size: 15px; color: #444; margin: 15px 0 35px; }
-  .cover .badge { display: inline-block; background: #dc3545; color: #fff; font-size: 13px; font-weight: 700; padding: 8px 24px; border-radius: 4px; margin-bottom: 30px; }
-  .cover table { border-collapse: collapse; width: 100%; max-width: 380px; margin-top: 20px; }
-  .cover td { padding: 5px 12px; border: 1px solid #dde; font-size: 11px; }
-  .cover td:first-child { background: #f1f5f9; font-weight: 600; }
-  .cover .warning { margin-top: 30px; font-size: 10px; color: #888; font-style: italic; border: 1px solid #ddd; padding: 10px; background: #fafafa; max-width: 440px; }
+:root {
+  --navy:      #0f172a;
+  --navy-med:  #1e293b;
+  --navy-light:#334155;
+  --blue:      #2563eb;
+  --blue-light:#3b82f6;
+  --red:       #dc2626;
+  --red-light: #fca5a5;
+  --red-bg:    #fef2f2;
+  --orange:    #d97706;
+  --orange-bg: #fffbeb;
+  --yellow:    #ca8a04;
+  --yellow-bg: #fefce8;
+  --green:     #16a34a;
+  --green-bg:  #f0fdf4;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --white:     #ffffff;
+  --radius:    6px;
+  --shadow:    0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 6px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.05);
+  --shadow-lg: 0 10px 24px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
 
-  /* Content */
-  h1 { font-size: 18px; color: #1a3a5c; border-bottom: 2px solid #1a3a5c; padding-bottom: 6px; margin: 24px 0 14px; page-break-after: avoid; }
-  h2 { font-size: 14px; color: #1a3a5c; margin: 18px 0 10px; page-break-after: avoid; border-left: 4px solid #1a3a5c; padding-left: 8px; }
-  h3 { font-size: 12px; color: #2c5282; margin: 14px 0 8px; page-break-after: avoid; }
-  h4 { font-size: 11px; color: #2d3748; margin: 10px 0 6px; font-weight: 700; }
-  p { margin-bottom: 8px; }
-  ul, ol { margin: 6px 0 10px 20px; }
-  li { margin-bottom: 3px; }
-  a { color: #2b6cb0; }
+html { font-size: 14px; scroll-behavior: smooth; }
 
-  /* Tables */
-  table { border-collapse: collapse; width: 100%; margin: 10px 0 16px; font-size: 10px; page-break-inside: avoid; }
-  th { background: #1a3a5c; color: #fff; padding: 5px 8px; text-align: left; font-weight: 600; font-size: 10px; }
-  td { padding: 4px 8px; border: 1px solid #dde; vertical-align: top; }
-  tr:nth-child(even) td { background: #f7f9fc; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--navy);
+  background: #f8fafc;
+  line-height: 1.65;
+}
 
-  /* Severity badges */
-  .critical { background: #fed7d7; color: #c53030; font-weight: 700; padding: 1px 5px; border-radius: 3px; font-size: 9.5px; white-space: nowrap; }
-  .high { background: #feebc8; color: #c05621; font-weight: 700; padding: 1px 5px; border-radius: 3px; font-size: 9.5px; white-space: nowrap; }
-  .medium { background: #fefcbf; color: #744210; font-weight: 700; padding: 1px 5px; border-radius: 3px; font-size: 9.5px; white-space: nowrap; }
-  .low { background: #c6f6d5; color: #276749; font-weight: 700; padding: 1px 5px; border-radius: 3px; font-size: 9.5px; white-space: nowrap; }
-
-  /* Code blocks */
-  pre { background: #1a202c; color: #e2e8f0; padding: 10px 12px; border-radius: 4px; overflow-x: auto; margin: 8px 0 12px; font-size: 9.5px; font-family: 'Courier New', monospace; line-height: 1.5; page-break-inside: avoid; }
-  code { font-family: 'Courier New', monospace; font-size: 9.5px; background: #edf2f7; padding: 1px 4px; border-radius: 2px; color: #2d3748; }
-
-  /* Decision box */
-  .decision-reject { background: #fff5f5; border: 2px solid #c53030; border-radius: 6px; padding: 14px 18px; margin: 16px 0; }
-  .decision-reject .decision-title { font-size: 16px; font-weight: 900; color: #c53030; margin-bottom: 8px; }
-
-  /* Info boxes */
-  .info-box { background: #ebf8ff; border-left: 4px solid #3182ce; padding: 10px 14px; margin: 10px 0; border-radius: 0 4px 4px 0; }
-  .warn-box { background: #fffbeb; border-left: 4px solid #d69e2e; padding: 10px 14px; margin: 10px 0; border-radius: 0 4px 4px 0; }
-  .vuln-section { border: 1px solid #e2e8f0; border-radius: 4px; margin: 12px 0; padding: 10px 14px; page-break-inside: avoid; }
-  .vuln-section h4 { color: #1a3a5c; margin-top: 0; }
-
-  /* TOC */
-  .toc { background: #f7f9fc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 12px 16px; margin: 16px 0; }
-  .toc ol { margin-left: 16px; }
-  .toc li { margin-bottom: 4px; font-size: 10.5px; }
-
-  /* Pipeline stages */
-  .pipeline { display: flex; flex-direction: column; align-items: flex-start; gap: 0; margin: 12px 0; }
-  .stage { background: #edf2f7; border-left: 3px solid #3182ce; padding: 5px 10px; font-size: 10px; font-weight: 600; margin-bottom: 0; }
-  .stage-arrow { color: #718096; font-size: 14px; padding-left: 12px; line-height: 1; margin: 1px 0; }
-
-  /* Footer */
-  .page-footer { position: fixed; bottom: 8mm; left: 18mm; right: 18mm; font-size: 9px; color: #a0aec0; border-top: 1px solid #e2e8f0; padding-top: 4px; display: flex; justify-content: space-between; }
-
-  /* Chain attack */
-  .chain { background: #f0fff4; border: 1px solid #9ae6b4; border-radius: 4px; padding: 10px 14px; margin: 10px 0; font-family: 'Courier New', monospace; font-size: 10px; }
-
-  /* Page break helpers */
+/* ─── PRINT ────────────────────────────────────────────────── */
+@media print {
+  @page { size: A4; margin: 15mm 15mm; }
+  body  { background: #fff; font-size: 10pt; }
+  .cover { page-break-after: always; min-height: 0; height: 100vh; }
   .page-break { page-break-before: always; }
   .no-break { page-break-inside: avoid; }
+  .wrapper { box-shadow: none; }
+  pre { white-space: pre-wrap; word-break: break-all; }
+  a { color: inherit; text-decoration: none; }
+}
+
+/* ─── LAYOUT WRAPPER ───────────────────────────────────────── */
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── COVER PAGE ───────────────────────────────────────────── */
+.cover {
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37,99,235,.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 350px; height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(220,38,38,.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cover-header {
+  padding: 32px 48px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding-bottom: 20px;
+}
+
+.cover-header .org {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--blue-light);
+}
+
+.cover-header .year {
+  font-size: .75rem;
+  color: rgba(255,255,255,.45);
+  font-weight: 500;
+}
+
+.cover-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 48px 40px;
+}
+
+.cover-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(37,99,235,.18);
+  color: var(--blue-light);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,130,246,.3);
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.cover-tag::before { content: '●'; font-size: .55rem; }
+
+.cover-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+
+.cover-title span { color: var(--blue-light); }
+
+.cover-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.cover-meta-item {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+
+.cover-meta-item .label {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  margin-bottom: 4px;
+}
+
+.cover-meta-item .value {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.cover-verdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--red);
+  color: var(--white);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-radius: var(--radius);
+  width: fit-content;
+  box-shadow: 0 4px 14px rgba(220,38,38,.4);
+}
+
+.cover-verdict::before {
+  content: '✕';
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.cover-stats {
+  display: flex;
+  gap: 32px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.cover-stat .num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1;
+}
+
+.cover-stat .num.red   { color: #f87171; }
+.cover-stat .num.orange{ color: #fb923c; }
+.cover-stat .num.yellow{ color: #fbbf24; }
+
+.cover-stat .lbl {
+  font-size: .7rem;
+  color: rgba(255,255,255,.4);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.cover-footer {
+  padding: 20px 48px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-size: .7rem;
+  color: rgba(255,255,255,.3);
+  font-style: italic;
+}
+
+/* ─── CONTENT AREA ─────────────────────────────────────────── */
+.content {
+  padding: 48px 56px;
+}
+
+/* ─── TABLE OF CONTENTS ────────────────────────────────────── */
+.toc {
+  background: var(--slate-100);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 48px;
+  border: 1px solid var(--slate-200);
+}
+
+.toc-title {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 16px;
+}
+
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 32px;
+}
+
+.toc li {
+  counter-increment: toc;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: .88rem;
+  color: var(--slate-600);
+}
+
+.toc li::before {
+  content: counter(toc, decimal-leading-zero);
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--blue);
+  min-width: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.toc a { color: var(--slate-700); text-decoration: none; font-weight: 500; }
+.toc a:hover { color: var(--blue); }
+
+/* ─── SECTION HEADERS ──────────────────────────────────────── */
+.section {
+  margin-bottom: 48px;
+}
+
+h1.section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -.02em;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--navy);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+h1.section-title .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: .8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-med);
+  margin: 24px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+h2::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 1rem;
+  background: var(--blue);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+h3 {
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--navy-light);
+  margin: 18px 0 8px;
+}
+
+p {
+  margin-bottom: 12px;
+  color: var(--slate-700);
+  font-size: .93rem;
+}
+
+ul, ol {
+  margin: 8px 0 12px 20px;
+}
+
+li {
+  margin-bottom: 4px;
+  color: var(--slate-700);
+  font-size: .93rem;
+}
+
+/* ─── TABLES ────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto;
+  margin: 16px 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--slate-200);
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+
+thead tr {
+  background: var(--navy);
+  color: var(--white);
+}
+
+thead th {
+  padding: 11px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: .78rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+tbody tr { border-bottom: 1px solid var(--slate-200); }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:nth-child(even) { background: var(--slate-100); }
+tbody tr:hover { background: #f0f7ff; }
+
+td {
+  padding: 10px 14px;
+  vertical-align: top;
+  color: var(--slate-700);
+}
+
+td strong { color: var(--navy); }
+
+/* ─── SEVERITY BADGES ──────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge-critical {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+}
+
+.badge-high {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fdba74;
+}
+
+.badge-medium {
+  background: #fefce8;
+  color: #a16207;
+  border: 1px solid #fde047;
+}
+
+.badge-low {
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+/* ─── CODE BLOCKS ───────────────────────────────────────────── */
+pre {
+  background: #0d1117;
+  color: #e6edf3;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: .8rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  border: 1px solid #30363d;
+  box-shadow: var(--shadow-md);
+}
+
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: .82em;
+  background: var(--slate-100);
+  color: #be123c;
+  padding: 1px 5px;
+  border-radius: 3px;
+  border: 1px solid var(--slate-200);
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: inherit;
+}
+
+/* ─── VULN CARDS ────────────────────────────────────────────── */
+.vuln-card {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.vuln-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--slate-100);
+  border-bottom: 1px solid var(--slate-200);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.vuln-card-header h3 {
+  margin: 0;
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--navy);
+  flex: 1;
+}
+
+.vuln-card-badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.vuln-card-body {
+  padding: 16px;
+}
+
+.vuln-card-body p { margin-bottom: 8px; }
+
+.vuln-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 4px;
+}
+
+/* ─── INFO / WARN / DANGER BLOCKS ──────────────────────────── */
+.alert {
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 14px 0;
+  border-left: 3px solid;
+  font-size: .88rem;
+}
+
+.alert-info   { background: #eff6ff; border-color: var(--blue); color: #1e40af; }
+.alert-warn   { background: var(--orange-bg); border-color: var(--orange); color: #92400e; }
+.alert-danger { background: var(--red-bg); border-color: var(--red); color: #991b1b; }
+.alert-success{ background: var(--green-bg); border-color: var(--green); color: #14532d; }
+
+.alert strong { display: block; margin-bottom: 4px; font-size: .8rem;
+  letter-spacing: .06em; text-transform: uppercase; }
+
+/* ─── CIA TABLE ─────────────────────────────────────────────── */
+.cia-yes  { color: #15803d; font-weight: 700; }
+.cia-no   { color: var(--slate-400); }
+.cia-poss { color: var(--orange); font-weight: 600; }
+
+/* ─── PIPELINE STEPS ────────────────────────────────────────── */
+.pipeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 20px 0;
+  max-width: 480px;
+}
+
+.pipeline-step {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.pipeline-step-num {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.pipeline-step-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: .75rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.pipeline-step-line {
+  width: 2px;
+  flex: 1;
+  background: var(--slate-300);
+  margin: 0 auto;
+  min-height: 16px;
+}
+
+.pipeline-step:last-child .pipeline-step-line { display: none; }
+
+.pipeline-step-content {
+  flex: 1;
+  padding: 4px 0 16px 14px;
+}
+
+.pipeline-step-label {
+  font-weight: 700;
+  font-size: .88rem;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+
+.pipeline-step-desc {
+  font-size: .8rem;
+  color: var(--slate-500);
+}
+
+/* ─── TOOL CARDS ────────────────────────────────────────────── */
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+
+.tool-card {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.tool-card-name {
+  font-size: .88rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-card-type {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--white);
+  font-size: .65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.tool-card-row {
+  margin-top: 8px;
+  font-size: .8rem;
+}
+
+.tool-card-row .lbl {
+  font-weight: 700;
+  color: var(--slate-600);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.tool-card-row p {
+  font-size: .8rem;
+  margin: 2px 0 6px;
+  color: var(--slate-600);
+}
+
+/* ─── DECISION BOX ──────────────────────────────────────────── */
+.decision-box {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 32px 36px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.decision-box::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: rgba(220,38,38,.15);
+  pointer-events: none;
+}
+
+.decision-box .verdict-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  margin-bottom: 8px;
+}
+
+.decision-box .verdict-value {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  color: #f87171;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.decision-box .verdict-value::before {
+  content: '✕';
+  width: 44px; height: 44px;
+  background: #dc2626;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  color: var(--white);
+  flex-shrink: 0;
+}
+
+.decision-box .verdict-reason {
+  font-size: .88rem;
+  color: rgba(255,255,255,.7);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+.decision-box .verdict-reason strong { color: #fca5a5; }
+
+/* ─── PRIORITY TABLE ────────────────────────────────────────── */
+.priority-row-critical { border-left: 3px solid #dc2626; }
+.priority-row-high     { border-left: 3px solid #d97706; }
+.priority-row-medium   { border-left: 3px solid #ca8a04; }
+
+/* ─── CHAIN DIAGRAM ─────────────────────────────────────────── */
+.chain {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: .8rem;
+  color: #8b949e;
+  margin: 16px 0;
+}
+
+.chain .chain-step {
+  color: #e6edf3;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.chain .chain-arrow {
+  color: #3b82f6;
+  margin: 2px 0 2px 12px;
+}
+
+.chain .chain-note {
+  color: #8b949e;
+  font-size: .75rem;
+  margin-left: 12px;
+}
+
+/* ─── SECTION DIVIDER ───────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  background: var(--slate-200);
+  margin: 48px 0;
+}
+
+/* ─── REMEDIATION BLOCK ─────────────────────────────────────── */
+.remed-block {
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  margin: 20px 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.remed-block-header {
+  padding: 14px 18px;
+  background: var(--slate-100);
+  border-bottom: 1px solid var(--slate-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.remed-block-header h3 {
+  margin: 0;
+  font-size: .9rem;
+  color: var(--navy);
+}
+
+.remed-section { padding: 16px 18px; border-bottom: 1px solid var(--slate-200); }
+.remed-section:last-child { border-bottom: none; }
+
+.remed-section-title {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--slate-500);
+  margin-bottom: 6px;
+}
+
+/* ─── FOOTER ────────────────────────────────────────────────── */
+.report-footer {
+  background: var(--navy);
+  color: rgba(255,255,255,.5);
+  padding: 24px 56px;
+  font-size: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.report-footer strong { color: rgba(255,255,255,.8); }
+
+/* ─── UTILITIES ─────────────────────────────────────────────── */
+.text-muted  { color: var(--slate-500); }
+.text-small  { font-size: .8rem; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.page-break  { page-break-before: always; padding-top: 48px; }
+.no-break    { page-break-inside: avoid; }
 </style>
 </head>
 <body>
+<div class="wrapper">
 
-<!-- COVER PAGE -->
+<!-- ═══════════════════════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════════════════════ -->
 <div class="cover">
-  <div class="logo">UNCHK</div>
-  <div class="school">Université Numérique Cheikh Hamidou Kane — Polytech Diamniadio</div>
+  <div class="cover-header">
+    <div class="org">UNCHK · Polytech Diamniadio · Licence 3 Cybersécurité</div>
+    <div class="year">Année académique 2024–2025</div>
+  </div>
 
-  <div class="title-main">Rapport de Sécurité<br>Évaluation Finale</div>
-  <div class="title-sub">Sécurité des données — Licence 3 Cybersécurité<br>Groupe 14</div>
+  <div class="cover-body">
+    <div class="cover-tag">Security Assessment Report</div>
 
-  <div class="badge">🔴 REJECT DEPLOYMENT</div>
+    <h1 class="cover-title">Rapport de<br><span>Sécurité</span></h1>
+    <p class="cover-subtitle">Évaluation de sécurité — OWASP Juice Shop · Examen Final</p>
 
-  <table>
-    <tr><td>Module</td><td>Sécurité des données</td></tr>
-    <tr><td>Application cible</td><td>OWASP Juice Shop v15+</td></tr>
-    <tr><td>Environnement</td><td>Docker isolé — 172.20.0.0/24</td></tr>
-    <tr><td>Année académique</td><td>2024–2025</td></tr>
-    <tr><td>Date du rapport</td><td>10 septembre 2026</td></tr>
-    <tr><td>Vulnérabilités identifiées</td><td>9 (2 Critical, 5 High, 2 Medium)</td></tr>
-    <tr><td>Décision de déploiement</td><td>🔴 Reject Deployment</td></tr>
-  </table>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="label">Application cible</div>
+        <div class="value">OWASP Juice Shop v15+</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Environnement</div>
+        <div class="value">Docker · 172.20.0.0/24</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Stack technique</div>
+        <div class="value">Node.js · Express · SQLite3</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Date du rapport</div>
+        <div class="value">10 septembre 2026</div>
+      </div>
+    </div>
 
-  <p class="warning">Avertissement légal : Ce rapport est réalisé dans un cadre pédagogique strictement contrôlé. L'environnement cible est local et intentionnellement vulnérable (OWASP Juice Shop). Toute reproduction de ces techniques sur un système réel sans autorisation écrite est illégale.</p>
+    <div class="cover-verdict">Reject Deployment</div>
+
+    <div class="cover-stats">
+      <div class="cover-stat">
+        <div class="num">9</div>
+        <div class="lbl">Vulnérabilités</div>
+      </div>
+      <div class="cover-stat">
+        <div class="num red">2</div>
+        <div class="lbl">Critical</div>
+      </div>
+      <div class="cover-stat">
+        <div class="num orange">5</div>
+        <div class="lbl">High</div>
+      </div>
+      <div class="cover-stat">
+        <div class="num yellow">2</div>
+        <div class="lbl">Medium</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    Document pédagogique — cadre strictement contrôlé. Environnement local isolé. Toute reproduction sur un système réel sans autorisation est illégale.
+  </div>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<div class="toc">
-  <h2 style="border:none;padding:0;margin-bottom:10px;">Table des matières</h2>
-  <ol>
-    <li>Introduction</li>
-    <li>Méthodologie</li>
-    <li>Vulnérabilités identifiées</li>
-    <li>Classification CWE</li>
-    <li>Analyse des impacts — Triade CIA</li>
-    <li>Remédiations</li>
-    <li>Pipeline de sécurité</li>
-    <li>Résultats et priorisation</li>
-    <li>Décision de déploiement</li>
-    <li>Conclusion et analyse critique</li>
-  </ol>
-</div>
+<!-- ═══════════════════════════════════════════════════════════
+     CONTENT
+════════════════════════════════════════════════════════════ -->
+<div class="content">
 
-<!-- SECTION 1 -->
-<h1>1. Introduction</h1>
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Table des matières</div>
+    <ol>
+      <li><a href="#s1">Introduction</a></li>
+      <li><a href="#s2">Méthodologie</a></li>
+      <li><a href="#s3">Vulnérabilités identifiées</a></li>
+      <li><a href="#s4">Classification CWE</a></li>
+      <li><a href="#s5">Analyse des impacts — CIA</a></li>
+      <li><a href="#s6">Remédiations</a></li>
+      <li><a href="#s7">Pipeline de sécurité</a></li>
+      <li><a href="#s8">Résultats et priorisation</a></li>
+      <li><a href="#s9">Décision de déploiement</a></li>
+      <li><a href="#s10">Conclusion et analyse critique</a></li>
+    </ol>
+  </div>
 
-<h2>1.1 Contexte</h2>
-<p>Une organisation prévoit de mettre en production une application web permettant à ses utilisateurs de créer un compte, de s'authentifier et d'accéder à des ressources contenant des données sensibles. Avant le déploiement, l'équipe sécurité mandate un audit complet afin d'identifier les vulnérabilités susceptibles de compromettre la protection des données.</p>
-<p>Cette évaluation est conduite dans le rôle de <strong>Cybersecurity Analyst / Junior DevSecOps Engineer</strong>.</p>
+  <!-- ── SECTION 1 ── -->
+  <div class="section" id="s1">
+    <h1 class="section-title"><span class="num">1</span>Introduction</h1>
 
-<h2>1.2 Application évaluée</h2>
-<table>
-  <tr><th>Paramètre</th><th>Valeur</th></tr>
-  <tr><td>Application</td><td>OWASP Juice Shop v15+</td></tr>
-  <tr><td>Stack technique</td><td>Node.js 18 / Express / Angular / SQLite3</td></tr>
-  <tr><td>URL interne (tests)</td><td><code>http://juiceshop:3000</code></td></tr>
-  <tr><td>Réseau Docker</td><td>172.20.0.0/24 — isolé</td></tr>
-  <tr><td>Dépôt de référence</td><td>github.com/devmail0561-web/labs_sec_data</td></tr>
-</table>
+    <h2>Contexte</h2>
+    <p>Une organisation prévoit de mettre en production une application web permettant à ses utilisateurs de créer un compte, de s'authentifier et d'accéder à des ressources contenant des données sensibles. Avant le déploiement, l'équipe sécurité mandate un audit complet afin d'identifier les vulnérabilités susceptibles de compromettre la protection des données.</p>
+    <p>Cette évaluation est conduite dans le rôle de <strong>Cybersecurity Analyst / Junior DevSecOps Engineer</strong>.</p>
 
-<h2>1.3 Objectifs</h2>
-<ul>
-  <li>Identifier au minimum 5 vulnérabilités de sécurité</li>
-  <li>Les classifier selon les CWE et l'OWASP Top 10 2021</li>
-  <li>Analyser leur impact sur la triade CIA</li>
-  <li>Proposer et implémenter des mesures de remédiation</li>
-  <li>Automatiser les contrôles de sécurité dans un pipeline Jenkins</li>
-  <li>Formuler une décision de déploiement argumentée</li>
-</ul>
+    <h2>Application évaluée</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paramètre</th><th>Valeur</th></tr></thead>
+        <tbody>
+          <tr><td>Application</td><td><strong>OWASP Juice Shop v15+</strong></td></tr>
+          <tr><td>Stack technique</td><td>Node.js 18 / Express 4 / Angular 16 / SQLite3</td></tr>
+          <tr><td>URL interne</td><td><code>http://juiceshop:3000</code></td></tr>
+          <tr><td>Réseau Docker</td><td>172.20.0.0/24 — isolé</td></tr>
+          <tr><td>Identifiants admin</td><td><code>admin@juice-sh.op</code> / <code>admin123</code></td></tr>
+          <tr><td>Dépôt</td><td>github.com/devmail0561-web/DevSecOps_lab</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-<!-- SECTION 2 -->
-<h1>2. Méthodologie</h1>
+    <h2>Objectifs</h2>
+    <ul>
+      <li>Identifier au minimum 5 vulnérabilités de sécurité</li>
+      <li>Les classifier selon les CWE et l'OWASP Top 10 2021</li>
+      <li>Analyser leur impact sur la triade CIA</li>
+      <li>Proposer et implémenter des mesures de remédiation</li>
+      <li>Automatiser les contrôles dans un pipeline Jenkins (SAST/DAST/SCA/Secrets)</li>
+      <li>Formuler une décision de déploiement argumentée</li>
+    </ul>
+  </div>
 
-<h2>2.1 Référentiel — OWASP Testing Guide v4.2</h2>
-<table>
-  <tr><th>Phase</th><th>Objectif</th><th>Scripts / Outils</th></tr>
-  <tr><td><strong>Détection</strong></td><td>Identifier et confirmer l'existence des vulnérabilités</td><td>test_http, test_headers, test_methods, test_auth, test_api_security</td></tr>
-  <tr><td><strong>Exploitation</strong></td><td>Démontrer l'impact réel et produire des preuves techniques</td><td>test_exploitation, exploit_vulnerabilities, OWASP ZAP</td></tr>
-</table>
+  <div class="section-divider"></div>
 
-<h2>2.2 Outils utilisés</h2>
-<table>
-  <tr><th>Outil</th><th>Type</th><th>Usage</th></tr>
-  <tr><td>Scripts Bash custom</td><td>Tests automatisés</td><td>Détection + exploitation ciblée</td></tr>
-  <tr><td>OWASP ZAP 2.14</td><td>DAST</td><td>Spider + scan actif</td></tr>
-  <tr><td>Semgrep (p/owasp-top-ten)</td><td>SAST</td><td>Analyse statique du code source</td></tr>
-  <tr><td>npm audit</td><td>SCA</td><td>Audit des dépendances Node.js</td></tr>
-  <tr><td>trufflehog</td><td>Secret Detection</td><td>Secrets dans le code et Git history</td></tr>
-  <tr><td>Jenkins (pipeline CI/CD)</td><td>Orchestration</td><td>Automatisation de tous les contrôles</td></tr>
-</table>
+  <!-- ── SECTION 2 ── -->
+  <div class="section" id="s2">
+    <h1 class="section-title"><span class="num">2</span>Méthodologie</h1>
 
-<h2>2.3 Environnement</h2>
-<pre>Machine Linux (Ubuntu 24.04)
+    <h2>Référentiel — OWASP Testing Guide v4.2</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phase</th><th>Objectif</th><th>Outils</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Détection</strong></td><td>Confirmer l'existence des vulnérabilités</td><td>test_http, test_headers, test_auth, test_api_security</td></tr>
+          <tr><td><strong>Exploitation</strong></td><td>Démontrer l'impact réel avec preuves techniques</td><td>test_exploitation, exploit_vulnerabilities, OWASP ZAP</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Outils utilisés</h2>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-card-name">Semgrep <span class="tool-card-type">SAST</span></div>
+        <div class="tool-card-row"><div class="lbl">Règles</div><p>p/owasp-top-ten, p/javascript</p></div>
+        <div class="tool-card-row"><div class="lbl">Usage</div><p>Analyse statique du code source</p></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-name">npm audit <span class="tool-card-type">SCA</span></div>
+        <div class="tool-card-row"><div class="lbl">Source</div><p>Base npm Advisory (GitHub Security)</p></div>
+        <div class="tool-card-row"><div class="lbl">Usage</div><p>Audit des dépendances Node.js</p></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-name">OWASP ZAP 2.14 <span class="tool-card-type">DAST</span></div>
+        <div class="tool-card-row"><div class="lbl">Mode</div><p>Spider + scan actif automatisé</p></div>
+        <div class="tool-card-row"><div class="lbl">Usage</div><p>Analyse dynamique en fonctionnement</p></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-card-name">trufflehog <span class="tool-card-type">Secrets</span></div>
+        <div class="tool-card-row"><div class="lbl">Mode</div><p>Entropie + patterns regex</p></div>
+        <div class="tool-card-row"><div class="lbl">Usage</div><p>Détection de secrets dans le code</p></div>
+      </div>
+    </div>
+
+    <h2>Environnement</h2>
+    <pre>Machine Linux (Ubuntu 24.04)
 │
-├── juiceshop:3000   (Docker — 172.20.0.10)  ← Application cible
-├── jenkins:8080     (Docker — 172.20.0.20)  ← Pipeline CI/CD
-└── mailhog:1025/8025 (Docker — 172.20.0.30) ← Notifications email</pre>
+├── juiceshop   172.20.0.10  :3000   ← Application cible (Node.js / Express)
+├── jenkins     172.20.0.20  :8080   ← Orchestrateur CI/CD (Pipeline from SCM)
+└── mailhog     172.20.0.30  :1025   ← SMTP local (capture des notifications)</pre>
 
-<p>Build Jenkins de référence : <strong>Build #21 — 14/08/2026 — Commit <code>9190f06</code></strong></p>
+    <p class="text-muted text-small">Build Jenkins de référence : <strong>Build #21 — 14/08/2026 — Commit <code>9190f06</code></strong></p>
+  </div>
 
-<!-- SECTION 3 -->
-<h1 class="page-break">3. Vulnérabilités identifiées</h1>
+  <div class="section-divider"></div>
 
-<table>
-  <tr>
-    <th>ID</th><th>Vulnérabilité</th><th>Composant</th><th>CWE</th><th>OWASP</th><th>CVSS</th><th>Criticité</th>
-  </tr>
-  <tr>
-    <td>V1</td><td>En-têtes HTTP manquants</td><td>Réponses HTTP</td><td>CWE-16</td><td>A05</td><td>5.3</td>
-    <td><span class="medium">Medium</span></td>
-  </tr>
-  <tr>
-    <td>V2</td><td>SQL Injection — Login</td><td>POST /rest/user/login</td><td>CWE-89</td><td>A03</td><td>9.8</td>
-    <td><span class="critical">Critical</span></td>
-  </tr>
-  <tr>
-    <td>V3</td><td>IDOR — Paniers</td><td>GET /rest/basket/:id</td><td>CWE-639</td><td>A01</td><td>8.1</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V4</td><td>Path Traversal + Null Byte</td><td>GET /ftp/</td><td>CWE-22/626</td><td>A01</td><td>7.5</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V5</td><td>XSS Stocké — Feedbacks</td><td>POST /api/Feedbacks</td><td>CWE-79</td><td>A03</td><td>7.2</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V6</td><td>Sensitive Data Exposure</td><td>/rest/admin/..., /api/Feedbacks</td><td>CWE-200</td><td>A02</td><td>7.5</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V7</td><td>Mass Assignment — Escalade</td><td>PUT /api/Users/:id</td><td>CWE-915</td><td>A08</td><td>8.8</td>
-    <td><span class="critical">Critical</span></td>
-  </tr>
-  <tr>
-    <td>V8</td><td>Méthodes HTTP dangereuses</td><td>Serveur HTTP</td><td>CWE-16</td><td>A05</td><td>5.8</td>
-    <td><span class="medium">Medium</span></td>
-  </tr>
-  <tr>
-    <td>V9</td><td>Absence rate limiting</td><td>POST /rest/user/login</td><td>CWE-307</td><td>A07</td><td>7.3</td>
-    <td><span class="high">High</span></td>
-  </tr>
-</table>
+  <!-- ── SECTION 3 ── -->
+  <div class="section page-break" id="s3">
+    <h1 class="section-title"><span class="num">3</span>Vulnérabilités identifiées</h1>
 
-<div class="vuln-section no-break">
-  <h4>V2 — SQL Injection (CWE-89) — <span class="critical">Critical CVSS 9.8</span></h4>
-  <p><strong>Preuve d'exploitation (EXP-01, 14/08/2026) :</strong></p>
-  <pre>POST /rest/user/login
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Vulnérabilité</th><th>Composant</th><th>CWE</th><th>OWASP</th><th>CVSS</th><th>Criticité</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>V1</strong></td><td>En-têtes HTTP manquants</td><td>Réponses HTTP</td><td>CWE-16</td><td>A05</td><td>5.3</td><td><span class="badge badge-medium">Medium</span></td></tr>
+          <tr><td><strong>V2</strong></td><td>SQL Injection — Login</td><td>POST /rest/user/login</td><td>CWE-89</td><td>A03</td><td>9.8</td><td><span class="badge badge-critical">Critical</span></td></tr>
+          <tr><td><strong>V3</strong></td><td>IDOR — Paniers</td><td>GET /rest/basket/:id</td><td>CWE-639</td><td>A01</td><td>8.1</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr><td><strong>V4</strong></td><td>Path Traversal + Null Byte</td><td>GET /ftp/</td><td>CWE-22/626</td><td>A01</td><td>7.5</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr><td><strong>V5</strong></td><td>XSS Stocké — Feedbacks</td><td>POST /api/Feedbacks</td><td>CWE-79</td><td>A03</td><td>7.2</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr><td><strong>V6</strong></td><td>Sensitive Data Exposure</td><td>/rest/admin/..., /api/Feedbacks</td><td>CWE-200</td><td>A02</td><td>7.5</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr><td><strong>V7</strong></td><td>Mass Assignment — Escalade</td><td>PUT /api/Users/:id</td><td>CWE-915</td><td>A08</td><td>8.8</td><td><span class="badge badge-critical">Critical</span></td></tr>
+          <tr><td><strong>V8</strong></td><td>Méthodes HTTP dangereuses</td><td>Serveur HTTP</td><td>CWE-16</td><td>A05</td><td>5.8</td><td><span class="badge badge-medium">Medium</span></td></tr>
+          <tr><td><strong>V9</strong></td><td>Absence de rate limiting</td><td>POST /rest/user/login</td><td>CWE-307</td><td>A07</td><td>7.3</td><td><span class="badge badge-high">High</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- V2 -->
+    <div class="vuln-card no-break">
+      <div class="vuln-card-header">
+        <h3>V2 — SQL Injection</h3>
+        <div class="vuln-card-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-medium" style="background:#f0f9ff;color:#0369a1;border-color:#bae6fd;">CWE-89</span>
+          <span class="badge badge-medium" style="background:#f0fdf4;color:#166534;border-color:#bbf7d0;">CVSS 9.8</span>
+        </div>
+      </div>
+      <div class="vuln-card-body">
+        <p>Le formulaire de connexion (<code>POST /rest/user/login</code>) est vulnérable à une injection SQL classique. L'entrée <code>email</code> est interpolée directement dans la requête SQL sans nettoyage.</p>
+        <div class="vuln-label">Preuve d'exploitation — EXP-01 (14/08/2026)</div>
+        <pre>POST /rest/user/login
 {"email":"' OR '1'='1'--","password":"x"}
-→ HTTP 200 — JWT admin retourné</pre>
-  <p><strong>JWT décodé :</strong></p>
-  <pre>{"data":{"id":1,"email":"admin@juice-sh.op","role":"admin",
-  "password":"0192023a7bbd73250516f069df18b500"},"bid":1,"iat":1786388813}</pre>
-  <p>Le hash MD5 <code>0192023a7bbd73250516f069df18b500</code> = mot de passe <code>admin123</code> exposé dans le token.</p>
-</div>
 
-<div class="vuln-section no-break">
-  <h4>V3 — IDOR Paniers (CWE-639) — <span class="high">High CVSS 8.1</span></h4>
-  <p><strong>Preuve d'exploitation (EXP-02, 10/08/2026) :</strong></p>
-  <pre>Compte attaquant : attacker_7417@lab.local
-GET /rest/basket/1 (JWT attaquant) → HTTP 200
-Contenu panier victime : Apple Juice ×2, Orange Juice ×3, Eggfruit Juice ×1
-POST /api/BasketItems (ajout dans le panier victime) → HTTP 200 ✅</pre>
-</div>
+→ HTTP 200 — JWT administrateur retourné
+  eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ...</pre>
+        <div class="vuln-label">JWT décodé</div>
+        <pre>{ "data": { "id": 1, "email": "admin@juice-sh.op", "role": "admin",
+           "password": "0192023a7bbd73250516f069df18b500" }, "bid": 1 }</pre>
+        <p class="text-small text-muted">Le hash MD5 <code>0192023a7bbd73250516f069df18b500</code> correspond à <code>admin123</code> — le mot de passe admin est exposé dans chaque token JWT.</p>
+      </div>
+    </div>
 
-<div class="vuln-section no-break">
-  <h4>V4 — Path Traversal + Null Byte (CWE-22/CWE-626) — <span class="high">High CVSS 7.5</span></h4>
-  <table>
-    <tr><th>Fichier</th><th>Résultat</th></tr>
-    <tr><td>GET /ftp/acquisitions.md</td><td>✅ HTTP 200 — téléchargé</td></tr>
-    <tr><td>GET /ftp/legal.md</td><td>✅ HTTP 200 — téléchargé</td></tr>
-    <tr><td>GET /ftp/package.json.bak</td><td>❌ HTTP 403 — filtré</td></tr>
-    <tr><td>GET /ftp/package.json.bak%2500.md</td><td>✅ HTTP 200 — <strong>filtre contourné via null byte</strong></td></tr>
-  </table>
-</div>
+    <!-- V3 -->
+    <div class="vuln-card no-break">
+      <div class="vuln-card-header">
+        <h3>V3 — IDOR — Accès non autorisé aux paniers</h3>
+        <div class="vuln-card-badges">
+          <span class="badge badge-high">High</span>
+          <span class="badge badge-medium" style="background:#f0f9ff;color:#0369a1;border-color:#bae6fd;">CWE-639</span>
+          <span class="badge badge-medium" style="background:#f0fdf4;color:#166534;border-color:#bbf7d0;">CVSS 8.1</span>
+        </div>
+      </div>
+      <div class="vuln-card-body">
+        <p>Le middleware d'authentification vérifie la validité du JWT mais ne contrôle pas que l'utilisateur est propriétaire du panier demandé (<code>/rest/basket/:id</code>).</p>
+        <div class="vuln-label">Preuve d'exploitation — EXP-02 (10/08/2026)</div>
+        <pre>Compte attaquant : attacker_7417@lab.local
+GET /rest/basket/1  [JWT attaquant]  →  HTTP 200
 
-<div class="vuln-section no-break">
-  <h4>V7 — Mass Assignment (CWE-915) — <span class="critical">Critical CVSS 8.8</span></h4>
-  <pre>PUT /api/Users/6
+Contenu panier victime :
+  Apple Juice (1000ml)   × 2  — 1.99 €
+  Orange Juice (1000ml)  × 3  — 2.99 €
+  Eggfruit Juice (500ml) × 1  — 8.99 €</pre>
+      </div>
+    </div>
+
+    <!-- V4 -->
+    <div class="vuln-card no-break">
+      <div class="vuln-card-header">
+        <h3>V4 — Path Traversal + Null Byte Bypass</h3>
+        <div class="vuln-card-badges">
+          <span class="badge badge-high">High</span>
+          <span class="badge badge-medium" style="background:#f0f9ff;color:#0369a1;border-color:#bae6fd;">CWE-22/626</span>
+          <span class="badge badge-medium" style="background:#f0fdf4;color:#166534;border-color:#bbf7d0;">CVSS 7.5</span>
+        </div>
+      </div>
+      <div class="vuln-card-body">
+        <p>Le répertoire <code>/ftp/</code> est accessible sans authentification. Un filtre d'extension bloque les fichiers <code>.bak</code>, mais le double encodage <code>%2500</code> (null byte) contourne ce filtre.</p>
+        <div class="vuln-label">Preuves — EXP-03</div>
+        <pre>GET /ftp/acquisitions.md              →  HTTP 200  ✓ Document interne téléchargé
+GET /ftp/legal.md                     →  HTTP 200  ✓ Document juridique téléchargé
+GET /ftp/package.json.bak             →  HTTP 403  ✗ Filtré
+GET /ftp/package.json.bak%2500.md     →  HTTP 200  ✓ Filtre contourné (null byte)</pre>
+      </div>
+    </div>
+
+    <!-- V7 -->
+    <div class="vuln-card no-break">
+      <div class="vuln-card-header">
+        <h3>V7 — Mass Assignment — Escalade de privilège</h3>
+        <div class="vuln-card-badges">
+          <span class="badge badge-critical">Critical</span>
+          <span class="badge badge-medium" style="background:#f0f9ff;color:#0369a1;border-color:#bae6fd;">CWE-915</span>
+          <span class="badge badge-medium" style="background:#f0fdf4;color:#166534;border-color:#bbf7d0;">CVSS 8.8</span>
+        </div>
+      </div>
+      <div class="vuln-card-body">
+        <p>L'API <code>PUT /api/Users/:id</code> passe <code>req.body</code> directement à <code>User.update()</code> sans filtrer les champs. N'importe quel utilisateur peut modifier son propre champ <code>role</code>.</p>
+        <div class="vuln-label">Preuve — EXP-05</div>
+        <pre>PUT /api/Users/6
 Authorization: Bearer &lt;JWT_ATTAQUANT&gt;
 {"role":"admin"}
-→ HTTP 200 — champ role accepté et modifié en base</pre>
-</div>
 
-<!-- SECTION 4 -->
-<h1 class="page-break">4. Classification CWE</h1>
+→ HTTP 200 — champ role modifié en base de données</pre>
+      </div>
+    </div>
+  </div>
 
-<table>
-  <tr><th>ID</th><th>CWE</th><th>Titre</th><th>OWASP 2021</th></tr>
-  <tr><td>V1, V8</td><td>CWE-16</td><td>Improper Configuration</td><td>A05 — Security Misconfiguration</td></tr>
-  <tr><td>V2</td><td>CWE-89</td><td>SQL Command Injection</td><td>A03 — Injection</td></tr>
-  <tr><td>V3</td><td>CWE-639</td><td>Authorization Bypass Through User-Controlled Key</td><td>A01 — Broken Access Control</td></tr>
-  <tr><td>V4</td><td>CWE-22</td><td>Path Traversal</td><td>A01 — Broken Access Control</td></tr>
-  <tr><td>V4</td><td>CWE-626</td><td>Null Byte Interaction Error</td><td>A01 — Broken Access Control</td></tr>
-  <tr><td>V5</td><td>CWE-79</td><td>Cross-Site Scripting (Stored)</td><td>A03 — Injection</td></tr>
-  <tr><td>V6</td><td>CWE-200</td><td>Exposure of Sensitive Information</td><td>A02 — Cryptographic Failures</td></tr>
-  <tr><td>V7</td><td>CWE-915</td><td>Mass Assignment (Dynamically-Controlled Attributes)</td><td>A08 — Software/Data Integrity Failures</td></tr>
-  <tr><td>V9</td><td>CWE-307</td><td>Improper Restriction of Authentication Attempts</td><td>A07 — Identification Failures</td></tr>
-</table>
+  <div class="section-divider"></div>
 
-<!-- SECTION 5 -->
-<h1>5. Analyse des impacts — Triade CIA</h1>
+  <!-- ── SECTION 4 ── -->
+  <div class="section" id="s4">
+    <h1 class="section-title"><span class="num">4</span>Classification CWE</h1>
 
-<table>
-  <tr><th>ID</th><th>Vulnérabilité</th><th>Confidentialité</th><th>Intégrité</th><th>Disponibilité</th><th>Criticité</th></tr>
-  <tr>
-    <td>V2</td><td>SQL Injection</td>
-    <td>✅ Oui</td><td>✅ Oui</td><td>Possible</td>
-    <td><span class="critical">Critical</span></td>
-  </tr>
-  <tr>
-    <td>V7</td><td>Mass Assignment</td>
-    <td>✅ Oui</td><td>✅ Oui</td><td>Non</td>
-    <td><span class="critical">Critical</span></td>
-  </tr>
-  <tr>
-    <td>V3</td><td>IDOR</td>
-    <td>✅ Oui</td><td>✅ Oui</td><td>Non</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V4</td><td>Path Traversal</td>
-    <td>✅ Oui</td><td>Non</td><td>Non</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V5</td><td>XSS Stocké</td>
-    <td>✅ Oui</td><td>Possible</td><td>Non</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V6</td><td>Data Exposure</td>
-    <td>✅ Oui</td><td>Non</td><td>Non</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V9</td><td>Rate Limiting absent</td>
-    <td>Possible</td><td>Possible</td><td>Non</td>
-    <td><span class="high">High</span></td>
-  </tr>
-  <tr>
-    <td>V1</td><td>Headers manquants</td>
-    <td>Possible</td><td>Non</td><td>Non</td>
-    <td><span class="medium">Medium</span></td>
-  </tr>
-  <tr>
-    <td>V8</td><td>TRACE actif</td>
-    <td>Possible</td><td>Non</td><td>Non</td>
-    <td><span class="medium">Medium</span></td>
-  </tr>
-</table>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>CWE</th><th>Titre complet</th><th>OWASP 2021</th></tr></thead>
+        <tbody>
+          <tr><td>V1, V8</td><td><strong>CWE-16</strong></td><td>Improper Configuration</td><td>A05 — Security Misconfiguration</td></tr>
+          <tr><td>V2</td><td><strong>CWE-89</strong></td><td>SQL Command Injection</td><td>A03 — Injection</td></tr>
+          <tr><td>V3</td><td><strong>CWE-639</strong></td><td>Authorization Bypass Through User-Controlled Key</td><td>A01 — Broken Access Control</td></tr>
+          <tr><td>V4</td><td><strong>CWE-22</strong></td><td>Path Traversal (Improper Pathname Limitation)</td><td>A01 — Broken Access Control</td></tr>
+          <tr><td>V4</td><td><strong>CWE-626</strong></td><td>Null Byte Interaction Error</td><td>A01 — Broken Access Control</td></tr>
+          <tr><td>V5</td><td><strong>CWE-79</strong></td><td>Cross-Site Scripting — Stored</td><td>A03 — Injection</td></tr>
+          <tr><td>V6</td><td><strong>CWE-200</strong></td><td>Exposure of Sensitive Information</td><td>A02 — Cryptographic Failures</td></tr>
+          <tr><td>V7</td><td><strong>CWE-915</strong></td><td>Mass Assignment (Dynamically-Controlled Attributes)</td><td>A08 — Software/Data Integrity Failures</td></tr>
+          <tr><td>V9</td><td><strong>CWE-307</strong></td><td>Improper Restriction of Excessive Authentication Attempts</td><td>A07 — Identification Failures</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<div class="chain">
-<strong>Chaîne d'attaque démontrée :</strong>
-1. V2 (SQLi) → JWT admin obtenu
-        ↓
-2. JWT admin → GET /api/Users → hashes MD5 de tous les mots de passe
-        ↓
-3. JWT admin → GET /rest/admin/application-configuration → clés OAuth exposées
-        ↓ (parallèlement)
-4. V3 (IDOR) → lecture + modification paniers de toutes les victimes
-5. V4 (Path Traversal) → exfiltration acquisitions.md, legal.md, package.json.bak
-</div>
+  <div class="section-divider"></div>
 
-<!-- SECTION 6 -->
-<h1 class="page-break">6. Remédiations</h1>
+  <!-- ── SECTION 5 ── -->
+  <div class="section" id="s5">
+    <h1 class="section-title"><span class="num">5</span>Analyse des impacts — Triade CIA</h1>
 
-<div class="vuln-section no-break">
-  <h3>6.1 V2 — SQL Injection (CWE-89) — Requêtes paramétrées</h3>
-  <p><strong>Cause racine :</strong> Interpolation directe de <code>email</code> dans la requête SQL via template literal. Le payload <code>' OR '1'='1'--</code> ferme la chaîne, ajoute une condition vraie et commente le reste.</p>
-  <pre>// VULNÉRABLE
-db.query(`SELECT * FROM Users WHERE email = '${email}' AND deletedAt IS NULL`)
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Vulnérabilité</th><th>Confidentialité</th><th>Intégrité</th><th>Disponibilité</th><th>Criticité</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>V2</strong></td><td>SQL Injection</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-yes">✓ Oui</td><td class="cia-poss">Possible</td>
+            <td><span class="badge badge-critical">Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>V7</strong></td><td>Mass Assignment</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-yes">✓ Oui</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-critical">Critical</span></td>
+          </tr>
+          <tr>
+            <td><strong>V3</strong></td><td>IDOR</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-yes">✓ Oui</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>V4</strong></td><td>Path Traversal</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-no">Non</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>V5</strong></td><td>XSS Stocké</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-poss">Possible</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>V6</strong></td><td>Data Exposure</td>
+            <td class="cia-yes">✓ Oui</td><td class="cia-no">Non</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>V9</strong></td><td>Rate Limiting absent</td>
+            <td class="cia-poss">Possible</td><td class="cia-poss">Possible</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-high">High</span></td>
+          </tr>
+          <tr>
+            <td><strong>V1</strong></td><td>Headers manquants</td>
+            <td class="cia-poss">Possible</td><td class="cia-no">Non</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+          <tr>
+            <td><strong>V8</strong></td><td>TRACE actif</td>
+            <td class="cia-poss">Possible</td><td class="cia-no">Non</td><td class="cia-no">Non</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-// CORRIGÉ — Sequelize parameterized query (remediation/sqli_fix.js)
-const user = await models.User.findOne({
-  where: { email: email, deletedAt: null }
-})</pre>
-  <p><strong>Justification :</strong> Les requêtes paramétrées séparent structurellement le code SQL des données. La valeur <code>email</code> est transmise comme paramètre lié, jamais interprétée comme SQL. Recommandé par OWASP ASVS v4.0 section 5.3.4.</p>
-  <p><strong>Vérification :</strong> Relancer <code>test_auth.sh</code> → payload SQLi doit retourner HTTP 401 au lieu de HTTP 200.</p>
-</div>
+    <h2>Chaîne d'attaque démontrée</h2>
+    <div class="chain">
+      <div class="chain-step">① V2 — SQL Injection → JWT admin obtenu</div>
+      <div class="chain-arrow">↓</div>
+      <div class="chain-note">JWT admin utilisé pour accéder aux APIs protégées</div>
+      <div class="chain-arrow">↓</div>
+      <div class="chain-step">② GET /api/Users → hashes MD5 de tous les mots de passe</div>
+      <div class="chain-arrow">↓</div>
+      <div class="chain-step">③ GET /rest/admin/application-configuration → clés Google OAuth exposées</div>
+      <br>
+      <div class="chain-step">④ V3 — IDOR → lecture + modification des paniers de toutes les victimes</div>
+      <br>
+      <div class="chain-step">⑤ V4 — Path Traversal → exfiltration de acquisitions.md, legal.md, package.json.bak</div>
+    </div>
+  </div>
 
-<div class="vuln-section no-break">
-  <h3>6.2 V3 — IDOR (CWE-639) — Middleware d'autorisation</h3>
-  <p><strong>Cause racine :</strong> Le middleware d'authentification vérifie la validité du JWT mais ne compare pas l'ID du panier dans l'URL avec celui encodé dans le JWT (<code>bid</code>).</p>
-  <pre>// CORRIGÉ (remediation/idor_fix.js)
-function verifyBasketOwnership(req, res, next) {
+  <div class="section-divider"></div>
+
+  <!-- ── SECTION 6 ── -->
+  <div class="section page-break" id="s6">
+    <h1 class="section-title"><span class="num">6</span>Remédiations</h1>
+
+    <!-- V2 -->
+    <div class="remed-block no-break">
+      <div class="remed-block-header">
+        <h3>V2 — SQL Injection (CWE-89)</h3>
+        <span class="badge badge-critical">Critical · CVSS 9.8</span>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Cause racine</div>
+        <p>Le handler de login construit sa requête SQL par interpolation directe de la valeur <code>email</code> via un template literal. Le payload <code>' OR '1'='1'--</code> ferme la chaîne, ajoute une condition toujours vraie et commente le reste.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Remédiation — Fichier : <code>remediation/sqli_fix.js</code></div>
+        <pre>// VULNÉRABLE
+db.sequelize.query(`SELECT * FROM Users WHERE email = '${req.body.email}'...`)
+
+// CORRIGÉ — Sequelize génère WHERE email = ? (paramètre lié par le driver)
+const user = await models.User.findOne({ where: { email: email, deletedAt: null } })</pre>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Justification</div>
+        <p>Les requêtes paramétrées séparent structurellement le code SQL des données. La valeur <code>email</code> est transmise comme paramètre lié — jamais interprétée comme SQL. Recommandé par OWASP ASVS v4.0 §5.3.4.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Vérification</div>
+        <pre>JUICE_SHOP_URL=http://localhost:3000 bash scripts/test_auth.sh
+# Attendu : HTTP 401 sur payload SQLi — "[OK] SQLi rejetée"</pre>
+      </div>
+    </div>
+
+    <!-- V3 -->
+    <div class="remed-block no-break">
+      <div class="remed-block-header">
+        <h3>V3 — IDOR (CWE-639)</h3>
+        <span class="badge badge-high">High · CVSS 8.1</span>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Cause racine</div>
+        <p>Le middleware d'authentification vérifie la validité du JWT mais ne compare pas l'ID du panier dans l'URL (<code>req.params.id</code>) avec celui encodé dans le JWT (<code>req.user.data.bid</code>).</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Remédiation — Fichier : <code>remediation/idor_fix.js</code></div>
+        <pre>function verifyBasketOwnership(req, res, next) {
   const requestedId = parseInt(req.params.id, 10)
   if (!req.user || req.user.data.bid !== requestedId) {
-    return res.status(403).json({ error: 'Forbidden',
-      message: 'You can only access your own basket.' })
+    return res.status(403).json({ error: 'Forbidden: not your basket.' })
   }
   next()
 }
-// router.get('/:id', security.isAuthorized, verifyBasketOwnership, basketHandler)</pre>
-  <p><strong>Justification :</strong> Le JWT contient déjà l'ID du panier (<code>bid</code>), donc aucune requête DB supplémentaire n'est nécessaire. La vérification est O(1) en temps de calcul.</p>
-  <p><strong>Vérification :</strong> Relancer EXP-02 → GET /rest/basket/1 avec JWT attaquant doit retourner HTTP 403.</p>
-</div>
+// router.get('/:id', security.isAuthorized, verifyBasketOwnership, handler)</pre>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Justification</div>
+        <p>Le JWT contient déjà le <code>bid</code> (basket ID) de l'utilisateur — la vérification est O(1), sans requête DB supplémentaire. Le JWT étant signé RS256, un attaquant ne peut pas modifier le champ <code>bid</code> sans invalider la signature.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Vérification</div>
+        <pre>bash scripts/test_exploitation.sh
+# EXP-02 : GET /rest/basket/1 avec JWT attaquant → HTTP 403 attendu</pre>
+      </div>
+    </div>
 
-<div class="vuln-section no-break">
-  <h3>6.3 V7 — Mass Assignment (CWE-915) — Whitelist de champs</h3>
-  <p><strong>Cause racine :</strong> Le handler <code>PUT /api/Users/:id</code> passe <code>req.body</code> directement à <code>User.update()</code> sans filtrer les champs sensibles.</p>
-  <pre>// VULNÉRABLE
-await models.User.update(req.body, { where: { id: req.params.id } })
-
-// CORRIGÉ (remediation/mass_assignment_fix.js)
-const ALLOWED_FIELDS = ['username','password','email',
+    <!-- V7 -->
+    <div class="remed-block no-break">
+      <div class="remed-block-header">
+        <h3>V7 — Mass Assignment (CWE-915)</h3>
+        <span class="badge badge-critical">Critical · CVSS 8.8</span>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Cause racine</div>
+        <p>Le handler <code>PUT /api/Users/:id</code> passe <code>req.body</code> directement à <code>User.update()</code>. N'importe quel champ du modèle (<code>role</code>, <code>isActive</code>, <code>totpSecret</code>...) peut être modifié.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Remédiation — Fichier : <code>remediation/mass_assignment_fix.js</code></div>
+        <pre>const ALLOWED_FIELDS = ['username','password','email',
                         'securityQuestion','securityAnswer','profileImage']
+// 'role' absent → ignoré silencieusement
 const safeUpdates = _.pick(req.body, ALLOWED_FIELDS)
-// 'role' absent de la whitelist → ignoré silencieusement
 await models.User.update(safeUpdates, { where: { id: userId } })</pre>
-  <p><strong>Justification :</strong> L'approche whitelist protège automatiquement contre les futurs champs sensibles ajoutés au modèle. <code>_.pick</code> est déjà une dépendance de Juice Shop (lodash) — aucun package supplémentaire.</p>
-  <p><strong>Vérification :</strong> Relancer EXP-05 → HTTP 200 mais <code>role</code> inchangé en base de données.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Justification</div>
+        <p>L'approche whitelist protège automatiquement contre les futurs champs sensibles. <code>_.pick</code> est déjà une dépendance de Juice Shop (lodash) — aucune dépendance supplémentaire.</p>
+      </div>
+      <div class="remed-section">
+        <div class="remed-section-title">Vérification</div>
+        <pre>curl -X PUT -H "Authorization: Bearer $JWT" \
+  -d '{"role":"admin"}' http://localhost:3000/api/Users/$ID
+# Attendu : HTTP 200 MAIS role inchangé en DB</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── SECTION 7 ── -->
+  <div class="section" id="s7">
+    <h1 class="section-title"><span class="num">7</span>Pipeline de sécurité</h1>
+
+    <h2>Architecture — 6 étapes Jenkins</h2>
+
+    <div class="pipeline">
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">1</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Checkout</div>
+          <div class="pipeline-step-desc">Récupération du code source — numéro de build, commit, branche</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">2</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Build / Preparation</div>
+          <div class="pipeline-step-desc">Création des répertoires de rapports — attente disponibilité Juice Shop (max 60s)</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">3</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Security Analysis <span style="color:var(--slate-500);font-weight:400;font-size:.8rem;">— parallèle</span></div>
+          <div class="pipeline-step-desc">SAST : Semgrep (p/owasp-top-ten) · SCA : npm audit</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">4</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Additional Security Check <span style="color:var(--slate-500);font-weight:400;font-size:.8rem;">— parallèle</span></div>
+          <div class="pipeline-step-desc">DAST : OWASP ZAP (spider + scan actif) · Secret Detection : trufflehog</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">5</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Report Generation</div>
+          <div class="pipeline-step-desc">Consolidation SAST + SCA + DAST + Secrets + tests bash → rapport_consolide.txt · archiveArtifacts</div>
+        </div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-num">
+          <div class="pipeline-step-circle">6</div>
+          <div class="pipeline-step-line"></div>
+        </div>
+        <div class="pipeline-step-content">
+          <div class="pipeline-step-label">Notification</div>
+          <div class="pipeline-step-desc">Email HTML via emailext → MailHog (SMTP :1025) · statut coloré + liens artefacts</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Outils — Analyse détaillée</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Outil</th><th>Type</th><th>Vulnérabilités détectées</th><th>Limites</th><th>Étape</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Semgrep</strong></td><td>SAST</td>
+            <td>Injections SQL/XSS/Cmd (CWE-89/79/78), secrets hardcodés (CWE-798)</td>
+            <td>Ne détecte pas IDOR, Missing Headers, vulnérabilités runtime</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td><strong>npm audit</strong></td><td>SCA</td>
+            <td>CVE dans les dépendances (prototype pollution, RCE...)</td>
+            <td>Uniquement les CVE publiées — invisible aux 0-day</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td><strong>OWASP ZAP</strong></td><td>DAST</td>
+            <td>XSS réfléchi/stocké, Missing Headers, méthodes dangereuses</td>
+            <td>Ne détecte pas IDOR ni Mass Assignment (logique métier)</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td><strong>trufflehog</strong></td><td>Secrets</td>
+            <td>Tokens AWS/GitHub, mots de passe hardcodés, clés RSA/SSH</td>
+            <td>Faux positifs sur chaînes aléatoires non-secrètes</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Résultats — Build #21 (14/08/2026)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Stage</th><th>Statut</th><th>Résultat</th></tr></thead>
+        <tbody>
+          <tr><td>Checkout</td><td>✅ SUCCESS</td><td>Commit <code>9190f06</code> — branche master</td></tr>
+          <tr><td>Build / Preparation</td><td>✅ SUCCESS</td><td>Juice Shop disponible HTTP 200</td></tr>
+          <tr><td>Security Analysis</td><td>⚠️ UNSTABLE</td><td>Semgrep : patterns injection détectés · npm audit : dépendances vulnérables</td></tr>
+          <tr><td>Additional Security Check</td><td>⚠️ UNSTABLE</td><td>ZAP : Missing Headers, XSS · trufflehog : secrets potentiels</td></tr>
+          <tr><td>Report Generation</td><td>✅ SUCCESS</td><td>rapport_consolide.txt généré, artefacts archivés</td></tr>
+          <tr><td>Notification</td><td>✅ SUCCESS</td><td>Email HTML envoyé via MailHog (localhost:8025)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert alert-warn">
+      <strong>Statut global : UNSTABLE</strong>
+      Comportement attendu sur OWASP Juice Shop. UNSTABLE signifie "vulnérabilités détectées et documentées" — le pipeline a fonctionné correctement.
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── SECTION 8 ── -->
+  <div class="section page-break" id="s8">
+    <h1 class="section-title"><span class="num">8</span>Résultats et priorisation</h1>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Problème</th><th>CWE</th><th>CVSS</th><th>Sévérité</th><th>Action recommandée</th></tr>
+        </thead>
+        <tbody>
+          <tr class="priority-row-critical">
+            <td><strong>SQL Injection — Authentification</strong></td><td>CWE-89</td><td><strong>9.8</strong></td>
+            <td><span class="badge badge-critical">Critical</span></td>
+            <td>🔴 Bloquer le déploiement</td>
+          </tr>
+          <tr class="priority-row-critical">
+            <td><strong>Mass Assignment — Escalade privilège</strong></td><td>CWE-915</td><td><strong>8.8</strong></td>
+            <td><span class="badge badge-critical">Critical</span></td>
+            <td>🔴 Bloquer le déploiement</td>
+          </tr>
+          <tr class="priority-row-high">
+            <td>IDOR — Paniers utilisateurs</td><td>CWE-639</td><td>8.1</td>
+            <td><span class="badge badge-high">High</span></td>
+            <td>🟠 Correction avant déploiement</td>
+          </tr>
+          <tr class="priority-row-high">
+            <td>Sensitive Data Exposure (Admin API)</td><td>CWE-200</td><td>7.5</td>
+            <td><span class="badge badge-high">High</span></td>
+            <td>🟠 Correction avant déploiement</td>
+          </tr>
+          <tr class="priority-row-high">
+            <td>Path Traversal + Null Byte /ftp/</td><td>CWE-22/626</td><td>7.5</td>
+            <td><span class="badge badge-high">High</span></td>
+            <td>🟠 Correction avant déploiement</td>
+          </tr>
+          <tr class="priority-row-high">
+            <td>Absence de rate limiting</td><td>CWE-307</td><td>7.3</td>
+            <td><span class="badge badge-high">High</span></td>
+            <td>🟠 Correction avant déploiement</td>
+          </tr>
+          <tr class="priority-row-high">
+            <td>XSS Stocké — Feedbacks</td><td>CWE-79</td><td>7.2</td>
+            <td><span class="badge badge-high">High</span></td>
+            <td>🟠 Correction avant déploiement</td>
+          </tr>
+          <tr class="priority-row-medium">
+            <td>Méthodes HTTP dangereuses (TRACE)</td><td>CWE-16</td><td>5.8</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+            <td>🟡 Correction planifiée</td>
+          </tr>
+          <tr class="priority-row-medium">
+            <td>En-têtes de sécurité manquants</td><td>CWE-16</td><td>5.3</td>
+            <td><span class="badge badge-medium">Medium</span></td>
+            <td>🟡 helmet.js + config Nginx</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-danger">
+      <strong>Distribution</strong>
+      2 Critical (22%) · 5 High (56%) · 2 Medium (22%) — <strong>7 des 9 vulnérabilités sont de sévérité High ou Critical.</strong>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── SECTION 9 ── -->
+  <div class="section" id="s9">
+    <h1 class="section-title"><span class="num">9</span>Décision de déploiement</h1>
+
+    <div class="decision-box">
+      <div class="verdict-label">Décision de déploiement</div>
+      <div class="verdict-value">Reject Deployment</div>
+      <p class="verdict-reason">
+        Deux vulnérabilités de sévérité <strong>Critical</strong> non corrigées rendent tout déploiement inacceptable :<br><br>
+        <strong>V2 — SQL Injection (CVSS 9.8)</strong> : exploitation confirmée — JWT administrateur obtenu sans aucun identifiant valide. Compromet la confidentialité et l'intégrité de toutes les données.<br><br>
+        <strong>V7 — Mass Assignment (CVSS 8.8)</strong> : tout utilisateur peut s'auto-attribuer le rôle admin via un simple PUT avec <code>{"role":"admin"}</code>.
+      </p>
+    </div>
+
+    <h2>Conditions pour Accept with Conditions</h2>
+    <ul>
+      <li>Correction et re-test de V2 (SQLi) et V7 (Mass Assignment) — bloquants absolus</li>
+      <li>Plan documenté et daté pour V3, V4, V5, V6, V9</li>
+      <li>Re-exécution du pipeline : zéro Critical en résultat</li>
+      <li>Monitoring de sécurité en place avant ouverture au public</li>
+    </ul>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── SECTION 10 ── -->
+  <div class="section" id="s10">
+    <h1 class="section-title"><span class="num">10</span>Conclusion et analyse critique</h1>
+
+    <h2>Synthèse</h2>
+    <p>Cette évaluation a identifié <strong>9 vulnérabilités</strong> couvrant 6 des 10 catégories du Top 10 OWASP 2021. La chaîne d'exploitation démontrée — SQLi → JWT admin → exfiltration de données → IDOR — illustre comment une seule vulnérabilité critique peut suffire à compromettre l'intégralité d'un système. Les remédiations implémentées (requêtes paramétrées, middleware d'autorisation, whitelist de champs) sont alignées avec l'OWASP ASVS v4.0. Le pipeline Jenkins automatise 4 types de contrôles et notifie l'équipe à chaque commit.</p>
+
+    <h2>Un outil sans alerte garantit-il qu'une application est sécurisée ?</h2>
+
+    <div class="alert alert-danger">
+      <strong>Réponse : Non — de façon catégorique.</strong>
+      Plusieurs limites structurelles rendent cette garantie impossible.
+    </div>
+
+    <p><strong>Les faux négatifs sont inévitables.</strong> Dans cette évaluation, la vulnérabilité V7 (Mass Assignment, CVSS 8.8) n'a été détectée ni par Semgrep ni par OWASP ZAP — elle nécessite une compréhension du modèle de données applicatif. ZAP a scanné l'intégralité de l'application sans la détecter. Un résultat « aucune alerte » de ZAP n'aurait donc pas garanti l'absence de cette vulnérabilité critique.</p>
+
+    <p><strong>La couverture des règles est structurellement incomplète.</strong> Les outils SAST travaillent avec des règles qui ne couvrent pas tous les vecteurs possibles. Une logique métier particulière, ou une vulnérabilité émergeant de l'interaction entre plusieurs composants, peut traverser tous les filtres existants.</p>
+
+    <p><strong>Les faux positifs créent la fatigue d'alerte.</strong> Si 45 des 50 alertes Semgrep sont de faux positifs, le risque est réel que les 5 vraies vulnérabilités soient négligées lors de la revue.</p>
+
+    <p><strong>L'analyse humaine est irremplaçable.</strong> L'enchaînement logique de plusieurs vulnérabilités mineures en une chaîne d'exploitation majeure — comme démontré ici — nécessite un raisonnement contextualisé que les outils actuels ne peuvent pas reproduire.</p>
+
+    <div class="alert alert-info">
+      <strong>Conclusion</strong>
+      Un pipeline DevSecOps constitue une couche de défense robuste et indispensable. Il garantit une vérification systématique à chaque commit. Mais il doit être complété par des revues de code humaines, des tests d'intrusion périodiques, et une culture de sécurité chez les développeurs. La sécurité est un processus continu, pas un état atteignable par un unique scan automatique.
+    </div>
+
+    <h2>Recommandations finales</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Priorité</th><th>Recommandation</th><th>Impact</th></tr></thead>
+        <tbody>
+          <tr><td><strong>P1</strong></td><td>Corriger V2 (SQLi) — requêtes paramétrées</td><td>Élimine le vecteur le plus critique</td></tr>
+          <tr><td><strong>P1</strong></td><td>Corriger V7 (Mass Assignment) — whitelist <code>_.pick</code></td><td>Élimine l'escalade de privilège</td></tr>
+          <tr><td><strong>P2</strong></td><td>Corriger V3 (IDOR) — middleware ownership</td><td>Protège les données de tous les utilisateurs</td></tr>
+          <tr><td><strong>P2</strong></td><td>Corriger V4 (Path Traversal) — supprimer /ftp/ de la racine web</td><td>Empêche l'exfiltration de fichiers internes</td></tr>
+          <tr><td><strong>P2</strong></td><td>Implémenter rate limiting (express-rate-limit)</td><td>Protège contre brute force</td></tr>
+          <tr><td><strong>P3</strong></td><td>Déployer helmet.js + config Nginx</td><td>Ajoute les headers de sécurité manquants</td></tr>
+          <tr><td>Continu</td><td>Maintenir le pipeline Jenkins actif à chaque commit</td><td>Détection précoce des régressions</td></tr>
+          <tr><td>Continu</td><td>Test d'intrusion externe avant chaque mise en production majeure</td><td>Couvre les angles morts des outils automatiques</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- .content -->
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<div class="report-footer">
+  <span><strong>Rapport de Sécurité — OWASP Juice Shop</strong> · Examen Final Sécurité des Données</span>
+  <span>UNCHK Licence Cybersécurité · 10 septembre 2026</span>
 </div>
 
-<div class="vuln-section no-break">
-  <h3>6.4 V1 — En-têtes manquants (CWE-16) — helmet.js + Nginx</h3>
-  <p><strong>Cause racine :</strong> Juice Shop n'intègre pas de middleware <code>helmet</code> ni de reverse proxy configuré pour les headers de sécurité.</p>
-  <pre>// CORRIGÉ (security-config/helmet_config.js)
-app.use(helmet({
-  contentSecurityPolicy: { directives: { defaultSrc: ["'self'"], ... } },
-  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
-  referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
-}))</pre>
-  <p><strong>Vérification :</strong> <code>curl -I http://localhost:3000 | grep -E 'Strict-Transport|Content-Security|Referrer'</code> → les 3 headers présents.</p>
-</div>
-
-<!-- SECTION 7 -->
-<h1 class="page-break">7. Pipeline de sécurité</h1>
-
-<h2>7.1 Architecture des 6 étapes Jenkins</h2>
-
-<div class="pipeline">
-  <div class="stage">1. Checkout — récupération du code (commit, branche)</div>
-  <div class="stage-arrow">↓</div>
-  <div class="stage">2. Build / Preparation — démarrage de l'environnement, vérification disponibilité Juice Shop</div>
-  <div class="stage-arrow">↓</div>
-  <div class="stage">3. Security Analysis — SAST (Semgrep) + SCA (npm audit)</div>
-  <div class="stage-arrow">↓</div>
-  <div class="stage">4. Additional Security Check — DAST (OWASP ZAP) + Secret Detection (trufflehog)</div>
-  <div class="stage-arrow">↓</div>
-  <div class="stage">5. Report Generation — consolidation de tous les résultats</div>
-  <div class="stage-arrow">↓</div>
-  <div class="stage">6. Notification — email HTML via MailHog (emailext)</div>
-</div>
-
-<p>Chaque étape utilise <code>catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE')</code> : une vulnérabilité détectée marque l'étape en échec mais le pipeline continue pour collecter tous les résultats.</p>
-
-<h2>7.2 Outils — Analyse détaillée</h2>
-
-<table>
-  <tr><th>Outil</th><th>Type</th><th>Vulnérabilités détectées</th><th>Limites</th><th>Étape</th></tr>
-  <tr>
-    <td><strong>Semgrep</strong><br>p/owasp-top-ten</td>
-    <td>SAST — Analyse statique</td>
-    <td>Injections SQL/XSS/Cmd (CWE-89/79/78), secrets hardcodés (CWE-798), désérialisation</td>
-    <td>Faux positifs sur frameworks complexes ; ne détecte pas IDOR, Missing Headers, vulnérabilités runtime</td>
-    <td>3 — Security Analysis</td>
-  </tr>
-  <tr>
-    <td><strong>npm audit</strong></td>
-    <td>SCA — Composition logicielle</td>
-    <td>Dépendances avec CVE connues (prototype pollution, RCE dans packages anciens)</td>
-    <td>Ne détecte que les CVE publiées ; invisible aux 0-day ; ne couvre pas le code custom</td>
-    <td>3 — Security Analysis</td>
-  </tr>
-  <tr>
-    <td><strong>OWASP ZAP</strong></td>
-    <td>DAST — Analyse dynamique</td>
-    <td>XSS réfléchi/stocké, Missing Headers, méthodes dangereuses, injections HTTP</td>
-    <td>Ne détecte pas IDOR ni Mass Assignment (logique métier) ; lent (~10-15 min) ; couverture limitée par le spider</td>
-    <td>4 — Additional Check</td>
-  </tr>
-  <tr>
-    <td><strong>trufflehog</strong></td>
-    <td>Secret Detection</td>
-    <td>Tokens AWS/GCP/GitHub, mots de passe hardcodés, clés RSA/SSH, secrets dans l'historique Git</td>
-    <td>Faux positifs sur chaînes aléatoires non-secrètes ; ne détecte pas les secrets en variables d'environnement</td>
-    <td>4 — Additional Check</td>
-  </tr>
-</table>
-
-<h2>7.3 Résultats Build #21 (14/08/2026)</h2>
-<table>
-  <tr><th>Stage</th><th>Statut</th><th>Résultat</th></tr>
-  <tr><td>Checkout</td><td>✅ SUCCESS</td><td>Commit 9190f06 — branche master</td></tr>
-  <tr><td>Build / Preparation</td><td>✅ SUCCESS</td><td>Juice Shop disponible HTTP 200</td></tr>
-  <tr><td>Security Analysis</td><td>⚠️ UNSTABLE</td><td>Semgrep : patterns injection détectés ; npm audit : dépendances vulnérables</td></tr>
-  <tr><td>Additional Security Check</td><td>⚠️ UNSTABLE</td><td>ZAP : Missing Headers, XSS ; trufflehog : secrets potentiels détectés</td></tr>
-  <tr><td>Report Generation</td><td>✅ SUCCESS</td><td>rapport_consolide.txt + rapport_final_lab1.txt générés</td></tr>
-  <tr><td>Notification</td><td>✅ SUCCESS</td><td>Email HTML envoyé via MailHog (http://localhost:8025)</td></tr>
-</table>
-<p><strong>Statut global :</strong> <code>UNSTABLE</code> — comportement attendu sur OWASP Juice Shop</p>
-
-<!-- SECTION 8 -->
-<h1 class="page-break">8. Résultats et priorisation</h1>
-
-<table>
-  <tr><th>Problème</th><th>CWE</th><th>CVSS</th><th>Sévérité</th><th>Action recommandée</th></tr>
-  <tr>
-    <td>SQL Injection — Authentification</td><td>CWE-89</td><td>9.8</td>
-    <td><span class="critical">Critical</span></td>
-    <td>🔴 Bloquer le déploiement — correction immédiate</td>
-  </tr>
-  <tr>
-    <td>Mass Assignment — Escalade privilège</td><td>CWE-915</td><td>8.8</td>
-    <td><span class="critical">Critical</span></td>
-    <td>🔴 Bloquer le déploiement — correction immédiate</td>
-  </tr>
-  <tr>
-    <td>IDOR — Paniers utilisateurs</td><td>CWE-639</td><td>8.1</td>
-    <td><span class="high">High</span></td>
-    <td>🟠 Correction requise avant déploiement</td>
-  </tr>
-  <tr>
-    <td>Sensitive Data Exposure (Admin API)</td><td>CWE-200</td><td>7.5</td>
-    <td><span class="high">High</span></td>
-    <td>🟠 Correction requise avant déploiement</td>
-  </tr>
-  <tr>
-    <td>Path Traversal + Null Byte /ftp/</td><td>CWE-22/626</td><td>7.5</td>
-    <td><span class="high">High</span></td>
-    <td>🟠 Correction requise avant déploiement</td>
-  </tr>
-  <tr>
-    <td>Absence rate limiting login</td><td>CWE-307</td><td>7.3</td>
-    <td><span class="high">High</span></td>
-    <td>🟠 Correction requise avant déploiement</td>
-  </tr>
-  <tr>
-    <td>XSS Stocké — Feedbacks</td><td>CWE-79</td><td>7.2</td>
-    <td><span class="high">High</span></td>
-    <td>🟠 Correction requise avant déploiement</td>
-  </tr>
-  <tr>
-    <td>Méthodes HTTP dangereuses (TRACE)</td><td>CWE-16</td><td>5.8</td>
-    <td><span class="medium">Medium</span></td>
-    <td>🟡 Correction planifiée — sprint suivant</td>
-  </tr>
-  <tr>
-    <td>En-têtes de sécurité manquants</td><td>CWE-16</td><td>5.3</td>
-    <td><span class="medium">Medium</span></td>
-    <td>🟡 Correction rapide via helmet.js</td>
-  </tr>
-</table>
-
-<p><strong>Distribution :</strong> 2 Critical (22%) · 5 High (56%) · 2 Medium (22%) · 0 Low</p>
-<p><strong>7 des 9 vulnérabilités sont de sévérité High ou Critical.</strong></p>
-
-<!-- SECTION 9 -->
-<h1>9. Décision de déploiement</h1>
-
-<div class="decision-reject">
-  <div class="decision-title">🔴 REJECT DEPLOYMENT</div>
-  <p><strong>L'application n'est pas prête à être déployée en production.</strong></p>
-  <p>Deux vulnérabilités de sévérité <strong>Critical</strong> non corrigées rendent tout déploiement inacceptable :</p>
-  <ol style="margin: 10px 0 10px 20px;">
-    <li><strong>SQL Injection (CVSS 9.8)</strong> — Exploitation confirmée : JWT administrateur obtenu sans aucun identifiant valide. Compromet la <em>confidentialité</em> et l'<em>intégrité</em> de toutes les données de l'application.</li>
-    <li><strong>Mass Assignment (CVSS 8.8)</strong> — Exploitation confirmée : élévation de privilège auto-administrée. Tout utilisateur peut devenir administrateur sans autorisation préalable.</li>
-  </ol>
-  <p>De plus, 5 vulnérabilités High (IDOR, Data Exposure, Path Traversal, Rate Limiting, XSS) augmentent significativement la surface d'attaque.</p>
-  <p><strong>Conditions pour Accept with Conditions :</strong> Correction et re-test de V2 + V7 (bloquants absolus), plan documenté pour V3, V4, V5, V6, V9, re-exécution du pipeline avec zéro Critical.</p>
-</div>
-
-<!-- SECTION 10 -->
-<h1 class="page-break">10. Conclusion et analyse critique</h1>
-
-<h2>10.1 Synthèse</h2>
-<p>Cette évaluation a identifié <strong>9 vulnérabilités</strong> couvrant 6 des 10 catégories du Top 10 OWASP 2021. Les vulnérabilités les plus critiques — l'injection SQL (CVSS 9.8) et le Mass Assignment (CVSS 8.8) — permettent respectivement d'obtenir un accès administrateur complet sans aucun identifiant, et de créer des comptes avec des privilèges élevés.</p>
-
-<p>La chaîne d'exploitation démontrée (SQLi → JWT admin → exfiltration de données → IDOR) illustre pourquoi une seule vulnérabilité critique peut suffire à compromettre la totalité d'un système. Les remédiations implémentées (requêtes paramétrées, middleware d'autorisation, whitelist de champs) sont alignées avec les recommandations de l'OWASP ASVS v4.0. Le pipeline Jenkins automatise 4 types de contrôles de sécurité et notifie l'équipe à chaque commit.</p>
-
-<h2>10.2 Analyse critique — Un outil de sécurité sans alerte garantit-il la sécurité ?</h2>
-
-<p><strong>Non — de façon catégorique.</strong> Plusieurs limites structurelles rendent cette garantie impossible.</p>
-
-<p><strong>Les faux négatifs sont inévitables.</strong> Chaque outil a un périmètre technique délimité. Dans cette évaluation, la vulnérabilité V7 (Mass Assignment, CVSS 8.8) n'est détectée ni par Semgrep ni par OWASP ZAP, car elle nécessite une compréhension du modèle de données applicatif — seul un test manuel ciblé peut la trouver. ZAP a scanné l'intégralité de l'application sans la détecter. Un résultat « aucune alerte » de ZAP n'aurait donc pas garanti l'absence de cette vulnérabilité critique.</p>
-
-<p><strong>La couverture des règles est structurellement incomplète.</strong> Les outils SAST travaillent avec des règles qui ne couvrent pas tous les vecteurs possibles. Un pattern d'injection non documenté, une logique métier particulière, ou une vulnérabilité émergeant de l'interaction entre plusieurs composants peuvent traverser tous les filtres existants sans déclencher d'alerte.</p>
-
-<p><strong>Les faux positifs créent la fatigue d'alerte.</strong> À l'inverse, un outil générant trop de faux positifs conduit les équipes à ignorer les alertes par lassitude. Si 45 des 50 alertes Semgrep sont des faux positifs, le risque est réel que les 5 vraies vulnérabilités soient négligées lors de la revue. La qualité des règles et leur pertinence pour le contexte applicatif est aussi importante que leur quantité.</p>
-
-<p><strong>L'analyse humaine est irremplaçable.</strong> Un attaquant réel raisonne par objectif (obtenir des données administrateurs, contourner un paiement) et explore des chemins que les outils automatiques ne parcourent pas. L'enchaînement logique de plusieurs vulnérabilités mineures en une chaîne d'exploitation majeure — comme démontré ici — nécessite un raisonnement contextualisé que les outils actuels ne peuvent pas reproduire.</p>
-
-<p><strong>Conclusion :</strong> Un pipeline de sécurité automatisé constitue une couche de défense robuste et indispensable. Il garantit une vérification systématique à chaque commit, réduit la surface d'exposition et accélère la détection des vulnérabilités les plus courantes. Mais il doit être complété par des revues de code humaines, des tests d'intrusion périodiques, et une culture de sécurité chez les développeurs. La sécurité est un processus continu, pas un état atteignable par un unique scan automatique.</p>
-
-<h2>10.3 Recommandations finales</h2>
-<table>
-  <tr><th>Priorité</th><th>Recommandation</th><th>Impact</th></tr>
-  <tr><td>P1</td><td>Corriger V2 (SQLi) — requêtes paramétrées</td><td>Élimine le vecteur le plus critique</td></tr>
-  <tr><td>P1</td><td>Corriger V7 (Mass Assignment) — whitelist</td><td>Élimine l'escalade de privilège</td></tr>
-  <tr><td>P2</td><td>Corriger V3 (IDOR) — middleware ownership</td><td>Protège les données de tous les utilisateurs</td></tr>
-  <tr><td>P2</td><td>Corriger V4 (Path Traversal) — supprimer /ftp/</td><td>Empêche l'exfiltration de fichiers internes</td></tr>
-  <tr><td>P2</td><td>Implémenter rate limiting (express-rate-limit)</td><td>Protège contre brute force</td></tr>
-  <tr><td>P3</td><td>Déployer helmet.js + config Nginx</td><td>Ajoute les headers de sécurité manquants</td></tr>
-  <tr><td>Continu</td><td>Maintenir le pipeline Jenkins actif à chaque commit</td><td>Détection précoce des régressions sécurité</td></tr>
-  <tr><td>Continu</td><td>Test d'intrusion externe avant chaque mise en production majeure</td><td>Couvre les angles morts des outils automatiques</td></tr>
-</table>
-
-<hr style="margin: 30px 0 16px; border-color: #e2e8f0;">
-<p style="text-align:center; color:#718096; font-size:10px;">
-  Rapport de Sécurité — OWASP Juice Shop — Examen Final Sécurité des Données<br>
-  UNCHK Licence Cybersécurité — 10 septembre 2026
-</p>
-
+</div><!-- .wrapper -->
 </body>
 </html>
