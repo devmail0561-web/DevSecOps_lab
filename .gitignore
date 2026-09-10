@@ -1,0 +1,12 @@
+# Fichiers temporaires
+*.log
+*.tmp
+/tmp/
+
+# Environnement Node.js
+node_modules/
+npm-debug.log
+
+# Fichiers système
+.DS_Store
+Thumbs.db
