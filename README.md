@@ -80,7 +80,23 @@ docker compose ps
 3. Cliquer sur **Build Now**
 4. Consulter la console et les artefacts après le build
 
-Le pipeline exécute automatiquement les 6 étapes : Checkout → Build/Preparation → Security Analysis (SAST + SCA) → Additional Security Check (DAST + Secret Detection) → Report Generation → Notification.
+Le pipeline exécute automatiquement les 6 étapes : Checkout → Build/Preparation → Security Analysis (SAST + SCA) → Additional Security Check (DAST + Secret Detection + HDWP) → Report Generation → Notification.
+
+**Déclenchement automatique via webhook GitHub :**
+
+```bash
+# 1. Lancer ngrok pour exposer Jenkins à GitHub
+ngrok http 8080
+# Copier l'URL HTTPS affichée (ex: https://xxxx.ngrok-free.dev)
+
+# 2. Configurer le webhook sur GitHub :
+#    → Repo Settings → Webhooks → Add webhook
+#    → Payload URL : https://xxxx.ngrok-free.dev/github-webhook/
+#    → Content type : application/json
+#    → Event : Just the push event
+
+# 3. Chaque git push déclenche automatiquement un build Jenkins
+```
 
 ### Option B — Scripts manuels
 

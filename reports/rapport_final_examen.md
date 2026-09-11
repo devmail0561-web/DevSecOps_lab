@@ -643,7 +643,7 @@ trufflehog filesystem /lab/app --json > "${REPORT_DIR}/secrets_scan.json"
 
 | Stage | Statut Jenkins | Résultat |
 |-------|---------------|---------|
-| Checkout | ✅ SUCCESS | Commit `9190f06` — branche `master` |
+| Checkout | ✅ SUCCESS | Commit `9190f06` — branche `main` |
 | Build / Preparation | ✅ SUCCESS | Juice Shop disponible HTTP 200 |
 | Security Analysis (SAST/SCA) | ⚠️ UNSTABLE | Vulnérabilités détectées (patterns injection JS) |
 | Additional Security Check (DAST/Secrets) | ⚠️ UNSTABLE | ZAP : Missing Headers, XSS ; trufflehog : secrets potentiels |

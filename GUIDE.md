@@ -714,10 +714,19 @@ Un utilisateur standard peut :
    - **Pipeline :**
      - Definition : **Pipeline script from SCM**
      - SCM : **Git**
-     - Repository URL : `https://github.com/devmail0561-web/labs_sec_data`
+     - Repository URL : `https://github.com/devmail0561-web/DevSecOps_lab.git`
      - Branch : `*/main`
-     - Script Path : `examen/projet_examen/Jenkinsfile`
+     - Script Path : `Jenkinsfile`
 4. **Save**
+5. **Webhook GitHub (déclenchement automatique au push) :**
+   - Installer **ngrok** : `snap install ngrok`
+   - Lancer le tunnel : `ngrok http 8080`
+   - Copier l'URL HTTPS (ex : `https://xxxx.ngrok-free.dev`)
+   - Sur GitHub → Settings → Webhooks → Add webhook :
+     - Payload URL : `https://xxxx.ngrok-free.dev/github-webhook/`
+     - Content type : `application/json`
+     - Event : `Just the push event`
+   - Vérifier : GitHub envoie un ping → Jenkins doit repondre HTTP 200
 
 #### Déclenchement manuel d'un build
 
@@ -1457,6 +1466,37 @@ pip3 install semgrep
 apt-get install -y trufflehog
 ```
 
+### ngrok — Le webhook GitHub ne déclenche pas le build
+
+Le webhook GitHub a besoin d'atteindre Jenkins via Internet. Jenkins tourne en local, donc il faut un tunnel ngrok.
+
+```bash
+# 1. Lancer ngrok
+ngrok http 8080
+# → Copier l'URL HTTPS (ex: https://xxxx.ngrok-free.dev)
+
+# 2. Vérifier que le tunnel fonctionne
+curl -s http://127.0.0.1:4040/api/tunnels | python3 -c "
+import sys, json
+for t in json.load(sys.stdin)['tunnels']:
+    print(t['public_url'])
+"
+
+# 3. Mettre à jour le webhook GitHub si l'URL ngrok a changé
+#    → Repo Settings → Webhooks → Edit
+#    → Remplacer l'ancienne URL par la nouvelle
+#    → Cliquer "Update webhook"
+
+# 4. Tester : onglet "Recent Deliveries" dans le webhook GitHub
+#    → "Redeliver" le dernier ping → doit retourner HTTP 200
+```
+
+**Attention :** l'URL ngrok change à chaque redémarrage (sauf compte payant). Il faut mettre à jour le webhook GitHub à chaque nouvelle session.
+
+### Jenkins build FAILURE en 7 secondes
+
+Si le build échoue immédiatement : vérifier que la branche configurée dans le job est `*/main` (pas `*/master`). Aller dans Job → Configure → Pipeline → Branch Specifier.
+
 ---
 
 ## 13. Référence rapide — commandes essentielles
@@ -1517,6 +1557,12 @@ done
 curl -s http://localhost:8080/jnlpJars/jenkins-cli.jar -o /tmp/jenkins-cli.jar
 java -jar /tmp/jenkins-cli.jar -s http://localhost:8080/ -auth admin:admin123 \
   declarative-linter < $BASE/Jenkinsfile
+
+# ── ngrok + Webhook GitHub ────────────────────────────────────
+ngrok http 8080                   # Lancer le tunnel (garder ouvert)
+# Copier l'URL HTTPS affichée → configurer dans GitHub Webhooks
+# Payload URL : https://xxxx.ngrok-free.dev/github-webhook/
+# Vérifier : curl -s http://127.0.0.1:4040/api/tunnels  (API locale ngrok)
 
 # ── Accès interfaces web ──────────────────────────────────────
 # Juice Shop  : http://localhost:3000

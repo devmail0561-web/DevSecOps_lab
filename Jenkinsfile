@@ -25,8 +25,9 @@ pipeline {
     // ── Déclencheurs ──────────────────────────────────────────
     // pollSCM  : Jenkins interroge le dépôt toutes les 5 min
     // githubPush : déclenchement immédiat via webhook GitHub
+    //   → Prérequis : ngrok http 8080 (tunnel HTTPS vers Jenkins local)
     //   → Configurer dans GitHub : Settings > Webhooks
-    //   → Payload URL : http://<IP_JENKINS>:8080/github-webhook/
+    //   → Payload URL : https://<NGROK_URL>/github-webhook/
     //   → Content type : application/json
     //   → Event       : Just the push event
     triggers {
