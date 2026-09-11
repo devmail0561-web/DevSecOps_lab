@@ -1,0 +1,70 @@
+# HDWP Engine -- Juice Shop Security Audit
+# Examen Final Securite des Donnees - UNCHK L3 Cybersecurite
+
+target:
+  base_url: "http://localhost:3000"
+  name: "OWASP Juice Shop"
+
+scope:
+  include:
+    - "http://localhost:3000/*"
+  exclude:
+    - "http://localhost:3000/socket.io/*"
+    - "http://localhost:3000/assets/*"
+    - "*.css"
+    - "*.png"
+    - "*.jpg"
+    - "*.svg"
+    - "*.ico"
+
+threat_model:
+  focus:
+    - authorization
+    - confidentiality
+    - integrity
+    - state
+  business_logic: true
+
+roles:
+  - name: "anonymous"
+    credentials: null
+  - name: "customer"
+    credentials:
+      type: "bearer"
+      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ.Cmt4y4stqYpOY4Uk6VRzNoGBQ6eITQ-tq1XBFoQ0Ror6tbQpNXngyW4QzQiyLDD4Z5kibAbCC13uA9o02ZjSRAJRyerPZwUC3HQuANTjrSML-mt1zsj6fPNOv3PHxkm_0uYW0EJdsMi6oL2HAjqsc5gFRrRSPTuoHMgoxjPVmgM"
+  - name: "admin"
+    credentials:
+      type: "bearer"
+      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+
+options:
+  allow_write: false
+  max_requests_per_minute: 120
+  language: "fr"
+
+plugins:
+  enabled:
+    - "core.authorization.bola"
+    - "core.authorization.authz"
+    - "core.authorization.bfla"
+    - "core.authorization.csrf"
+    - "core.injection.sqli"
+    - "core.injection.xss"
+    - "core.injection.ssti"
+    - "core.injection.cmdi"
+    - "core.injection.nosqli"
+    - "core.injection.path_traversal"
+    - "core.injection.mass_assignment"
+    - "core.injection.xxe"
+    - "core.injection.graphql"
+    - "core.injection.crlf"
+    - "core.configuration.cors"
+    - "core.configuration.security_headers"
+    - "core.session_property.jwt"
+    - "core.information_flow.info_disclosure"
+    - "core.information_flow.ssrf"
+    - "core.information_flow.open_redirect"
+    - "core.business_invariant.race_condition"
+    - "core.temporal.session_replay"
+  disabled: []
+  config: {}

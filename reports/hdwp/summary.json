@@ -1,0 +1,26 @@
+{
+  "total": 91,
+  "by_severity": {
+    "CRITICAL": 0,
+    "HIGH": 10,
+    "MEDIUM": 27,
+    "LOW": 27,
+    "INFO": 27
+  },
+  "by_owasp": {
+    "A05:2021": 81,
+    "A02:2021": 5,
+    "A01:2021": 5
+  },
+  "avg_confidence": 0.9578,
+  "explained_count": 10,
+  "top_contributing_signals": {
+    "reproducibility": 10,
+    "oracle_strength": 10,
+    "behavioral_specificity": 10,
+    "causal_depth": 10,
+    "observation_quality": 9,
+    "crossrole_signal": 1
+  },
+  "generated_at": "2026-09-11T16:43:30.294885+00:00"
+}

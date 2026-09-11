@@ -12,10 +12,11 @@
 
 Ce dépôt contient l'évaluation de sécurité complète de l'application **OWASP Juice Shop**, réalisée dans le cadre de l'examen final du cours Sécurité des données. Il couvre :
 
-- L'identification de 9 vulnérabilités (SQLi, IDOR, XSS, Mass Assignment, Path Traversal, etc.)
+- L'identification de 11 vulnérabilités (SQLi, IDOR, XSS, Mass Assignment, Path Traversal, JWT alg_none, BFLA, etc.)
 - L'analyse d'impact selon la triade CIA
 - Les remédiations implémentées pour les vulnérabilités critiques
 - Un pipeline Jenkins automatisant SAST, SCA, DAST et Secret Detection
+- Un scan HDWP (Hypothesis-Driven Web Pentesting Engine) apportant une couverture sémantique cross-role
 - La décision de déploiement argumentée
 
 ---
@@ -125,6 +126,21 @@ export ZAP_API_KEY=changeme
 # Rapports générés dans : lab2-owasp/reports/
 ```
 
+### Option D — Scan HDWP (DAST sémantique)
+
+```bash
+cd /home/virus-one/Bureau/project_hdwp
+source .venv/bin/activate
+
+# Scan complet avec 3 rôles (anonymous, customer, admin)
+hdwp run --context /home/virus-one/cours_simac_l3/Semestre_6/Sec_data/examen/juiceshop-hdwp-context.yaml \
+    --no-tui --db "sqlite+aiosqlite:///juiceshop_evidence.db"
+
+# Générer les rapports
+hdwp report --db "sqlite+aiosqlite:///juiceshop_evidence.db" --format md --output hdwp_report
+hdwp report --db "sqlite+aiosqlite:///juiceshop_evidence.db" --format json --output hdwp_report
+```
+
 ---
 
 ## Outils utilisés
@@ -134,6 +150,7 @@ export ZAP_API_KEY=changeme
 | Semgrep (`p/owasp-top-ten`) | SAST — analyse statique | Security Analysis |
 | npm audit | SCA — analyse des dépendances | Security Analysis |
 | OWASP ZAP 2.14 | DAST — analyse dynamique | Additional Security Check |
+| HDWP v4.0 (devmail0561-web/hdwp) | DAST sémantique — analyse dynamique par falsification d'hypothèses | Additional Security Check |
 | trufflehog / gitleaks | Secret Detection | Additional Security Check |
 | Scripts Bash custom (`test_*.sh`) | Tests fonctionnels + exploitation | Security Analysis + Additional Check |
 | MailHog | Capture SMTP locale | Notification |
@@ -149,7 +166,8 @@ projet_examen/
 │
 ├── reports/
 │   ├── rapport_final_examen.md  ← Rapport complet (10 sections)
-│   └── rapport_final_examen.html← Version HTML imprimable en PDF
+│   ├── rapport_final_examen.html← Version HTML imprimable en PDF
+│   └── hdwp/                    ← Rapports HDWP (findings.json, summary.json)
 │
 ├── screenshots/                 ← 10 captures d'écran de l'environnement
 │   ├── 01_juiceshop_accueil.png
@@ -185,6 +203,8 @@ projet_examen/
 | IDOR Paniers (CWE-639) | 8.1 High | 🔴 Non corrigée dans Juice Shop |
 | Path Traversal + Null Byte (CWE-22/626) | 7.5 High | 🔴 Non corrigée dans Juice Shop |
 | Sensitive Data Exposure (CWE-200) | 7.5 High | 🔴 Non corrigée dans Juice Shop |
+| JWT Algorithm None (CWE-347) | 8.2 High | 🔴 Non corrigée — détectée par HDWP |
+| BFLA — 5 endpoints (CWE-284) | 7.6 High | 🔴 Non corrigée — détectée par HDWP |
 
 **Décision de déploiement : 🔴 Reject Deployment**
 
@@ -197,9 +217,10 @@ Remédiations proposées et documentées dans `remediation/` — à appliquer su
 1. **(0:00–1:30)** Présentation de l'environnement Docker (Juice Shop, Jenkins, MailHog)
 2. **(1:30–3:30)** Démonstration de la vulnérabilité principale : SQLi → JWT admin (EXP-01)
 3. **(3:30–5:00)** Démonstration IDOR (EXP-02) et Path Traversal (EXP-03)
-4. **(5:00–7:30)** Pipeline Jenkins : lancement, résultats par étape, artefacts archivés
-5. **(7:30–9:00)** Notification email reçue dans MailHog
-6. **(9:00–10:00)** Décision finale : Reject Deployment — justification
+4. **(5:00–6:00)** Scan HDWP : findings JWT alg_none (V10) et BFLA 5 endpoints (V11)
+5. **(6:00–8:00)** Pipeline Jenkins : lancement, résultats par étape, artefacts archivés
+6. **(8:00–9:00)** Notification email reçue dans MailHog
+7. **(9:00–10:00)** Décision finale : Reject Deployment — justification
 
 ---
 

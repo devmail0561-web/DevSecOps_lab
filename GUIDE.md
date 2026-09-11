@@ -24,8 +24,11 @@
    - 5.7 V7 — Mass Assignment (CWE-915)
    - 5.8 V8 — Méthodes HTTP dangereuses (CWE-16)
    - 5.9 V9 — Absence de rate limiting (CWE-307)
+   - 5.10 V10 — JWT Algorithm None Bypass (CWE-347)
+   - 5.11 V11 — Broken Function Level Authorization (CWE-284)
 6. [Guide du pipeline Jenkins](#6-guide-du-pipeline-jenkins)
 7. [Guide des outils de sécurité](#7-guide-des-outils-de-sécurité)
+   - 7.5 HDWP (DAST sémantique)
 8. [Interprétation des résultats](#8-interprétation-des-résultats)
 9. [Guide de remédiation](#9-guide-de-remédiation)
 10. [Décision de déploiement](#10-décision-de-déploiement)
@@ -53,8 +56,9 @@ Ce projet simule un audit de sécurité complet avant une mise en production. L'
 ### Résultat attendu
 
 À la fin de ce guide, tu auras :
-- Identifié et exploité 9 vulnérabilités confirmées
+- Identifié et exploité 11 vulnérabilités confirmées
 - Un pipeline Jenkins fonctionnel avec 4 types d'analyse automatisée
+- Un scan HDWP avec 91 findings (JWT alg_none, BFLA multi-endpoints, headers manquants)
 - Des remédiations implémentées pour les 3 vulnérabilités les plus critiques
 - Un rapport PDF complet (10 sections)
 - Une décision de déploiement argumentée : **Reject Deployment**
@@ -609,6 +613,94 @@ done
 
 ---
 
+### 5.10 V10 — JWT Algorithm None Bypass (CWE-347)
+
+**OWASP :** A02:2021 — Cryptographic Failures | **CVSS :** 8.2 (High)
+
+#### Qu'est-ce que c'est ?
+
+Le JWT (JSON Web Token) utilise un champ `alg` dans son header pour indiquer l'algorithme de signature. L'attaque "alg none" consiste à modifier ce champ à `"none"` et à supprimer la signature, forçant le serveur à accepter le token sans vérification cryptographique.
+
+#### Pourquoi Juice Shop est vulnérable ?
+
+La bibliothèque `jsonwebtoken` de Node.js, si mal configurée, accepte les tokens avec `alg: "none"`. Juice Shop ne force pas un algorithme spécifique lors de la vérification :
+
+```javascript
+// Code vulnérable simplifié
+jwt.verify(token, publicKey)  // Accepte n'importe quel alg, y compris "none"
+```
+
+#### Découverte par HDWP
+
+Cette vulnérabilité a été détectée automatiquement par HDWP lors du scan du 11/09/2026 :
+
+- **Plugin :** `core.session_property.jwt`
+- **Mutation :** `jwt_manipulation` (type `alg_none`)
+- **Méthode :** HDWP a falsifié l'hypothèse "le serveur rejette les tokens avec alg=none" en envoyant un token manipulé et en observant un HTTP 200 au lieu du 401 attendu
+- **Confiance :** 95% (reproductibilité 1.00, force oracle 0.95)
+- **Expériences :** EXP-4a7bd886, EXP-4d948905, EXP-83c9e2a2
+
+#### Impact réel
+
+Un attaquant peut :
+- Forger un JWT avec `role: "admin"` sans connaître la clé RSA privée
+- Accéder à tous les endpoints protégés avec des privilèges arbitraires
+- Cela constitue un deuxième vecteur d'accès admin, indépendant de la SQLi (V2)
+
+---
+
+### 5.11 V11 — Broken Function Level Authorization — 5 endpoints (CWE-284)
+
+**OWASP :** A01:2021 — Broken Access Control | **CVSS :** 7.6 (High)
+
+#### Qu'est-ce que c'est ?
+
+BFLA (Broken Function Level Authorization) se produit quand des endpoints réservés à un rôle (ex: admin) sont accessibles par un autre rôle (ex: customer). Contrairement à IDOR (V3) qui concerne l'accès à des *objets* d'autres utilisateurs, BFLA concerne l'accès à des *fonctions* réservées.
+
+#### Découverte par HDWP
+
+HDWP a détecté cette vulnérabilité via une analyse cross-role automatique :
+
+- **Plugin :** `core.authorization.authz`
+- **Mutation :** `privilege_escalation`
+- **Méthode :** HDWP envoie la même requête avec le JWT `customer` et le JWT `admin`, puis compare les réponses. Si les deux rôles obtiennent HTTP 200, l'endpoint a un contrôle d'accès insuffisant.
+- **Confiance :** 93% par endpoint
+
+#### Endpoints affectés
+
+```bash
+# Tous accessibles avec un JWT "customer" alors qu'ils devraient être réservés aux admins :
+
+# Plaintes des utilisateurs
+curl -s -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000/api/Complaints
+# → HTTP 200 (devrait être 403)
+
+# Solde du portefeuille
+curl -s -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000/rest/wallet/balance
+# → HTTP 200
+
+# Articles des paniers (tous les utilisateurs)
+curl -s -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000/api/BasketItems
+# → HTTP 200
+
+# Cartes de paiement enregistrées
+curl -s -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000/api/Cards
+# → HTTP 200
+
+# CAPTCHA (endpoint interne)
+curl -s -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000/rest/image-captcha/
+# → HTTP 200
+```
+
+#### Impact réel
+
+Un utilisateur standard peut :
+- Lire les plaintes de tous les utilisateurs (données personnelles)
+- Consulter les soldes de portefeuille d'autres utilisateurs
+- Accéder aux cartes de paiement enregistrées
+
+---
+
 ## 6. Guide du pipeline Jenkins
 
 ### 6.1 Configuration du job Jenkins
@@ -830,6 +922,86 @@ trufflehog analyse le code source et l'historique Git à la recherche de secrets
 
 ---
 
+### 7.5 HDWP (DAST sémantique)
+
+**Qu'est-ce que c'est ?**
+HDWP (Hypothesis-Driven Web Pentesting Engine) est un moteur de test d'intrusion sémantique open-source développé en Python. Contrairement aux scanners traditionnels (ZAP, Nikto) qui travaillent par fuzzing et correspondance de signatures, HDWP modélise l'application, dérive des propriétés de sécurité formelles, et les falsifie par des expériences comportementales contrôlées.
+
+**Pipeline HDWP :**
+```
+ApplicationModel  (modèle sémantique — endpoints, paramètres, rôles)
+  → SecurityPropertyEngine  (propriétés formelles : "cet endpoint doit être protégé par rôle")
+    → HypothesisEngine      (hypothèses falsifiables)
+      → ExperimentEngine    (baseline + mutation, encoding, bypass WAF)
+        → SemanticOracle    (diff comportemental : la mutation est-elle distinguable ?)
+          → Findings        (classification OWASP/CWE + score de confiance ML)
+```
+
+**Configuration utilisée pour Juice Shop :**
+```yaml
+# juiceshop-hdwp-context.yaml
+roles:
+  - name: "anonymous"     # Pas de JWT
+  - name: "customer"      # JWT utilisateur standard
+  - name: "admin"         # JWT administrateur
+plugins:
+  enabled:
+    - core.authorization.bola      # IDOR
+    - core.authorization.authz     # Contrôle d'accès
+    - core.authorization.bfla      # Broken Function Level Auth
+    - core.injection.sqli          # SQL Injection
+    - core.injection.xss           # Cross-Site Scripting
+    - core.session_property.jwt    # Manipulation JWT
+    - core.configuration.security_headers  # Headers HTTP
+    # ... 22 plugins au total
+options:
+  allow_write: false               # Mode lecture seule — pas de SQLi/XSS actif
+  max_requests_per_minute: 120
+```
+
+**Résultat du scan (11/09/2026) :**
+```
+Total findings : 91
+  HIGH   : 10  (CWE-347 JWT alg_none × 5, CWE-284 privilege escalation × 5)
+  MEDIUM : 27  (CWE-693 CSP absent)
+  LOW    : 27  (CWE-346 COOP absent)
+  INFO   : 27  (CWE-116 Referrer-Policy absent)
+Confiance moyenne : 95.8%
+Durée du scan : ~3 minutes
+```
+
+**Comment lancer le scan :**
+```bash
+cd /home/virus-one/Bureau/project_hdwp
+source .venv/bin/activate
+
+# Scan headless
+hdwp run --context /chemin/vers/juiceshop-hdwp-context.yaml \
+    --no-tui --db "sqlite+aiosqlite:///juiceshop_evidence.db"
+
+# Générer le rapport
+hdwp report --db "sqlite+aiosqlite:///juiceshop_evidence.db" --format md --output hdwp_report
+```
+
+**Limites importantes :**
+- En mode `allow_write: false`, HDWP ne teste pas les vulnérabilités nécessitant des requêtes d'écriture (SQLi active, XSS stocké, Mass Assignment)
+- La couverture dépend des endpoints découverts par le crawler — les endpoints nécessitant une navigation complexe (SPA Angular) peuvent être manqués
+- Les scores de confiance sont calculés par un modèle ML entraîné sur des sessions précédentes — la première session peut avoir des scores moins calibrés
+
+**Comparaison avec OWASP ZAP :**
+
+| Critère | OWASP ZAP | HDWP |
+|---------|-----------|------|
+| Approche | Fuzzing par signatures | Falsification d'hypothèses sémantiques |
+| Détection IDOR/BFLA | ❌ (pas de logique métier) | ✅ (diff cross-role automatique) |
+| Détection JWT manipulation | ❌ | ✅ (mutations jwt_manipulation) |
+| Détection XSS/SQLi active | ✅ (scan actif) | ❌ en mode allow_write=false |
+| Headers manquants | ✅ | ✅ (par endpoint, avec CWE spécifique) |
+| Configuration requise | Minimale (URL cible) | Rôles + JWT requis |
+| Temps de scan | 10-15 min | ~3 min |
+
+---
+
 ## 8. Interprétation des résultats
 
 ### 8.1 Rapport consolidé (`rapport_consolide.txt`)
@@ -853,7 +1025,7 @@ SECTION 5 : Tests d'exploitation
   → sortie de chaque script test_*.sh
 
 RÉSUMÉ :
-  tableau des 9 vulnérabilités avec CWE, CVSS, Sévérité
+  tableau des 11 vulnérabilités avec CWE, CVSS, Sévérité
   DÉCISION : REJECT DEPLOYMENT
 ```
 
@@ -880,8 +1052,9 @@ Règle de priorisation utilisée (basée sur CVSS v3.1) :
 **Un faux négatif** est une vulnérabilité réelle que l'outil n'a pas détectée. Exemples dans notre cas :
 - ZAP ne détecte pas V3 (IDOR) ni V7 (Mass Assignment)
 - Semgrep ne détecte pas V1 (headers manquants)
+- ZAP ne détecte pas V10 (JWT alg_none) ni V11 (BFLA) — HDWP les détecte grâce à son approche sémantique cross-role
 
-C'est pour cela que l'analyse humaine reste indispensable.
+C'est pour cela que la **complémentarité des outils** (ZAP + HDWP + analyse humaine) est indispensable.
 
 ---
 
@@ -1002,6 +1175,64 @@ applySecurityHeaders(app)  // Ajoute HSTS, CSP, Referrer-Policy...
 
 **nginx_security.conf** est à utiliser si Juice Shop est derrière un reverse proxy Nginx, ce qui est la configuration recommandée en production. Nginx ajoute les headers avant que la réponse ne soit envoyée au client.
 
+### 9.5 V10 — JWT alg_none → Forcer la vérification d'algorithme
+
+**Principe :** Le serveur Juice Shop accepte les JWT avec `"alg": "none"` (sans signature). La correction consiste à forcer `jwt.verify()` à n'accepter que l'algorithme attendu (`RS256`).
+
+**Avant (vulnérable) :**
+```javascript
+// Le serveur accepte n'importe quel algorithme, y compris "none"
+jwt.verify(token, publicKey)
+```
+
+**Après (corrigé) :**
+```javascript
+// Forcer RS256 — rejette automatiquement alg:none, HS256, etc.
+jwt.verify(token, publicKey, { algorithms: ['RS256'] })
+```
+
+**Pourquoi ça marche :** En spécifiant `algorithms: ['RS256']`, la bibliothèque `jsonwebtoken` rejette tout JWT dont le header contient un algorithme différent. Un JWT avec `"alg": "none"` est rejeté avec une erreur `JsonWebTokenError: invalid algorithm` avant même que le payload ne soit lu. Cela bloque :
+- L'attaque `alg_none` (signature vide acceptée)
+- L'attaque `alg_confusion` (HS256 avec la clé publique comme secret)
+
+**Comment vérifier :**
+```bash
+# Générer un JWT alg_none forgé
+HEADER=$(echo -n '{"typ":"JWT","alg":"none"}' | base64 -w0 | tr '+/' '-_' | tr -d '=')
+PAYLOAD=$(echo -n '{"data":{"id":1,"email":"admin@juice-sh.op","role":"admin"},"iat":99999999999}' | base64 -w0 | tr '+/' '-_' | tr -d '=')
+FORGED_JWT="${HEADER}.${PAYLOAD}."
+
+# Tester — doit retourner HTTP 401 après correction
+curl -s -o /dev/null -w "HTTP %{http_code}\n" \
+  -H "Authorization: Bearer $FORGED_JWT" \
+  http://localhost:3000/rest/user/whoami
+# Avant correction : HTTP 200 (accès admin)
+# Après correction : HTTP 401 (rejeté)
+```
+
+### 9.6 V11 — BFLA → Middleware de contrôle par rôle
+
+**Principe :** Les endpoints d'administration (/api/Complaints, /api/Cards, /rest/wallet/balance) sont accessibles par des utilisateurs ayant le rôle `customer`. La correction consiste à ajouter un middleware vérifiant le rôle avant d'autoriser l'accès.
+
+**Code de la correction :**
+```javascript
+function requireRole(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.data.role)) {
+      return res.status(403).json({ error: 'Forbidden: insufficient privileges.' })
+    }
+    next()
+  }
+}
+
+// Appliquer sur les routes sensibles :
+router.get('/api/Complaints', security.isAuthorized, requireRole('admin'), complaintsHandler)
+router.post('/api/Complaints', security.isAuthorized, requireRole('admin'), complaintsHandler)
+router.get('/api/Cards', security.isAuthorized, requireRole('admin', 'accounting'), cardsHandler)
+```
+
+**Pourquoi ça marche :** Le rôle est extrait du JWT signé côté serveur — un `customer` ne peut pas le modifier sans invalider la signature RS256. Le middleware vérifie que `req.user.data.role` figure dans la liste des rôles autorisés avant de passer au handler.
+
 ---
 
 ## 10. Décision de déploiement
@@ -1030,14 +1261,16 @@ La décision de déploiement repose sur la présence de vulnérabilités **Criti
 ### 10.3 Justification pour notre cas
 
 ```
-V2 - SQL Injection    CVSS 9.8 Critical → JWT admin obtenu = accès total
-V7 - Mass Assignment  CVSS 8.8 Critical → rôle admin auto-assigné
-V3 - IDOR             CVSS 8.1 High     → données clients exposées
-V4 - Path Traversal   CVSS 7.5 High     → documents confidentiels téléchargeables
-V6 - Data Exposure    CVSS 7.5 High     → config et clés OAuth accessibles
+V2  - SQL Injection     CVSS 9.8 Critical → JWT admin obtenu = accès total
+V7  - Mass Assignment   CVSS 8.8 Critical → rôle admin auto-assigné
+V10 - JWT alg_none      CVSS 8.2 High     → forge de JWT admin sans clé (HDWP)
+V3  - IDOR              CVSS 8.1 High     → données clients exposées
+V11 - BFLA              CVSS 7.6 High     → endpoints admin accessibles par customer (HDWP)
+V4  - Path Traversal    CVSS 7.5 High     → documents confidentiels téléchargeables
+V6  - Data Exposure     CVSS 7.5 High     → config et clés OAuth accessibles
 ```
 
-Mettre cette application en production dans son état actuel signifie exposer l'intégralité des données de tous les utilisateurs à n'importe qui connaissant la vulnérabilité SQLi — ce qui est publiquement documenté sur OWASP Juice Shop.
+Mettre cette application en production dans son état actuel signifie exposer l'intégralité des données de tous les utilisateurs à n'importe qui connaissant la vulnérabilité SQLi — ce qui est publiquement documenté sur OWASP Juice Shop. De plus, les vulnérabilités V10 et V11 découvertes par HDWP montrent que même sans SQLi, un attaquant peut forger un JWT admin (alg_none) ou accéder à des fonctions administratives via BFLA.
 
 ---
 
@@ -1050,7 +1283,7 @@ Mettre cette application en production dans son état actuel signifie exposer l'
 #### [0:00–0:45] Introduction
 
 *Script (à dire) :*
-> "Je vais vous présenter l'évaluation de sécurité que j'ai réalisée sur OWASP Juice Shop, une application web délibérément vulnérable. Mon rôle est celui d'un Cybersecurity Analyst. J'ai identifié 9 vulnérabilités dont 2 critiques, et ma conclusion est que l'application ne peut pas être déployée en production dans son état actuel."
+> "Je vais vous présenter l'évaluation de sécurité que j'ai réalisée sur OWASP Juice Shop, une application web délibérément vulnérable. Mon rôle est celui d'un Cybersecurity Analyst. J'ai utilisé une combinaison d'outils — Semgrep, npm audit, OWASP ZAP, trufflehog, et mon propre outil HDWP — pour identifier 11 vulnérabilités dont 2 critiques. Ma conclusion est que l'application ne peut pas être déployée en production dans son état actuel."
 
 *Actions :*
 - Ouvrir http://localhost:3000 → montrer la page d'accueil de Juice Shop
@@ -1127,7 +1360,7 @@ curl -s --path-as-is http://localhost:3000/ftp/package.json.bak%2500.md | head -
    - "Checkout — récupération du code"
    - "Build/Preparation — Juice Shop est accessible"
    - "Security Analysis — Semgrep + npm audit s'exécutent en parallèle"
-   - "Additional Security Check — ZAP + trufflehog en parallèle"
+   - "Additional Security Check — ZAP + HDWP + trufflehog en parallèle"
    - "Report Generation — consolidation"
    - "Notification — email envoyé"
 
@@ -1154,7 +1387,7 @@ curl -s --path-as-is http://localhost:3000/ftp/package.json.bak%2500.md | head -
 #### [7:00–7:45] Décision finale
 
 *Script :*
-> "Après cette évaluation, ma décision est : **Reject Deployment**. L'application présente 2 vulnérabilités Critical non corrigées — une SQL Injection exploitable et un Mass Assignment permettant l'escalade de privilège. Avec la chaîne d'exploitation démontrée, n'importe qui peut obtenir un accès administrateur complet en quelques secondes, accéder aux données de tous les utilisateurs et compromettre l'intégralité du système."
+> "Après cette évaluation, ma décision est : **Reject Deployment**. L'application présente 2 vulnérabilités Critical et 5 High non corrigées — dont 2 découvertes par HDWP : un bypass JWT alg_none et un BFLA. Avec la chaîne d'exploitation démontrée, n'importe qui peut obtenir un accès administrateur complet en quelques secondes, accéder aux données de tous les utilisateurs et compromettre l'intégralité du système."
 
 *Ouvrir le rapport HTML (`reports/rapport_final_examen.html`) :*
 > "L'analyse complète est documentée dans ce rapport de 10 sections."
@@ -1264,6 +1497,15 @@ curl -s --path-as-is "$JUICE_SHOP_URL/ftp/package.json.bak%2500.md" | head -10
 
 # Headers actuels
 curl -sI $JUICE_SHOP_URL/ | grep -iE "strict|csp|referrer|x-content|x-frame"
+
+# ── HDWP — Scan sémantique ───────────────────────────────────
+cd /home/virus-one/Bureau/project_hdwp
+hdwp run --context $BASE/juiceshop-hdwp-context.yaml --no-tui \
+  --db sqlite:///juiceshop_evidence.db
+hdwp report --db sqlite:///juiceshop_evidence.db --format md \
+  --output $BASE/reports/hdwp/hdwp_report.md
+hdwp report --db sqlite:///juiceshop_evidence.db --format json \
+  --output $BASE/reports/hdwp/findings.json
 
 # ── Validation syntaxe du projet ──────────────────────────────
 BASE=/home/virus-one/cours_simac_l3/Semestre_6/Sec_data/examen/projet_examen

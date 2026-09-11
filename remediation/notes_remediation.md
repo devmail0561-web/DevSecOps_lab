@@ -13,6 +13,8 @@ Licence 3 Cybersécurité — 2024-2025
 | SQL Injection | V2 | CWE-89 | Interpolation directe de l'email dans la requête SQL via template literal | Sequelize parameterized query (findOne with where clause) | `remediation/sqli_fix.js` | `JUICE_SHOP_URL=http://localhost:3000 bash scripts/test_auth.sh` → attendu HTTP 401 sur payload SQLi |
 | IDOR (Paniers) | V3 | CWE-639 | Vérification du JWT sans contrôle de propriété de la ressource basket | Middleware `verifyBasketOwnership` vérifiant req.user.data.bid | `remediation/idor_fix.js` | Relancer EXP-02 → HTTP 403 attendu pour tous les paniers étrangers |
 | Mass Assignment | V7 | CWE-915 | req.body passé directement à User.update() sans filtrage des champs | Whitelist `_.pick(req.body, ALLOWED_FIELDS)` excluant `role`, `isActive` | `remediation/mass_assignment_fix.js` | Relancer EXP-05 → HTTP 200 mais `role` inchangé en base |
+| JWT Algorithm None | V10 | CWE-347 | `jwt.verify()` ne force pas l'algorithme RS256, accepte `alg: "none"` | Forcer `{ algorithms: ['RS256'] }` dans `jwt.verify()` | `remediation/jwt_fix.js` | Relancer scan HDWP → 0 finding CWE-347 |
+| BFLA (5 endpoints) | V11 | CWE-284 | Pas de middleware de vérification de rôle sur les endpoints admin | Middleware `requireRole('admin')` sur chaque endpoint sensible | `remediation/bfla_fix.js` | Relancer scan HDWP → 0 finding CWE-284 privilege_escalation |
 
 ---
 
@@ -210,4 +212,94 @@ curl -s -H "Authorization: Bearer $JWT" \
 
 # Résultat avant patch :
 #   role: admin     (escalade réussie)
+```
+
+---
+
+## Vulnérabilité V10 — JWT Algorithm None Bypass
+
+**CWE-347 / OWASP A02:2021 / CVSS 8.2 (High)**
+
+**Preuve d'exploitation :**
+Détecté par HDWP (scan du 11/09/2026, session SESSION-086e746e) :
+```
+Plugin   : core.session_property.jwt
+Mutation : jwt_manipulation (alg_none)
+Résultat : token manipulé avec alg="none" accepté (HTTP 200)
+Confiance: 95% (reproductibilité 1.00, oracle 0.95)
+Expériences : EXP-4a7bd886, EXP-4d948905, EXP-83c9e2a2
+```
+
+**Cause racine :**
+La bibliothèque `jsonwebtoken` de Node.js accepte par défaut les tokens avec `alg: "none"` si l'appel à `jwt.verify()` ne spécifie pas explicitement les algorithmes autorisés. Le header JWT est modifié de `{"alg":"RS256"}` à `{"alg":"none"}`, la signature est supprimée, et le serveur accepte le token sans vérification cryptographique.
+
+**Remédiation :**
+Forcer l'algorithme de vérification dans `jwt.verify()` :
+```javascript
+// AVANT (vulnérable)
+jwt.verify(token, publicKey)
+
+// APRÈS (corrigé)
+jwt.verify(token, publicKey, { algorithms: ['RS256'] })
+```
+
+**Justification :**
+En spécifiant `algorithms: ['RS256']`, la bibliothèque rejette automatiquement tout token dont le header `alg` ne correspond pas. Les attaques `alg: "none"` et `alg: "HS256"` (confusion de clé) sont éliminées structurellement.
+
+**Procédure de vérification :**
+```bash
+cd /home/virus-one/Bureau/project_hdwp && source .venv/bin/activate
+hdwp run --context juiceshop-hdwp-context.yaml --no-tui --db evidence_verify.db
+# Résultat attendu : 0 finding CWE-347
+```
+
+---
+
+## Vulnérabilité V11 — Broken Function Level Authorization (BFLA)
+
+**CWE-284 / OWASP A01:2021 / CVSS 7.6 (High)**
+
+**Preuve d'exploitation :**
+Détecté par HDWP via analyse cross-role (scan du 11/09/2026) :
+```
+Plugin   : core.authorization.authz
+Mutation : privilege_escalation
+Endpoints: /api/Complaints, /rest/wallet/balance, /api/BasketItems,
+           /api/Cards, /rest/image-captcha/
+Résultat : HTTP 200 retourné pour le rôle "customer" sur des endpoints admin
+Confiance: 93% (reproductibilité 1.00, oracle 0.90)
+```
+
+**Cause racine :**
+Ces endpoints ne vérifient que la présence d'un JWT valide (authentification) sans contrôler le rôle de l'utilisateur (autorisation). Seul `security.isAuthorized` est utilisé comme middleware, sans vérification de `req.user.data.role`.
+
+**Remédiation :**
+Créer un middleware `requireRole()` et l'appliquer sur chaque endpoint sensible :
+```javascript
+function requireRole(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.data.role)) {
+      return res.status(403).json({ error: 'Forbidden: insufficient role.' })
+    }
+    next()
+  }
+}
+
+// Application :
+router.get('/api/Complaints', security.isAuthorized, requireRole('admin'), complaintsHandler)
+router.get('/api/Cards', security.isAuthorized, requireRole('customer', 'admin'), cardsHandler)
+```
+
+**Justification :**
+La séparation authentification/autorisation est un principe fondamental (OWASP ASVS V4.0, section 4.1). Le middleware `requireRole()` est réutilisable et centralise la logique de contrôle de rôle.
+
+**Procédure de vérification :**
+```bash
+JWT_CUSTOMER="..."
+for ep in "/api/Complaints" "/rest/wallet/balance" "/api/BasketItems" "/api/Cards"; do
+  CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+    -H "Authorization: Bearer $JWT_CUSTOMER" http://localhost:3000$ep)
+  echo "$ep → HTTP $CODE"
+done
+# Attendu après patch : /api/Complaints → HTTP 403
 ```

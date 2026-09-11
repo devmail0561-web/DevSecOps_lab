@@ -4,7 +4,7 @@
 **Formation :** Licence 3 — Cybersécurité  
 **Établissement :** Université Numérique Cheikh Hamidou Kane (UNCHK)  
 **Année académique :** 2024–2025  
-**Date :** 10 septembre 2026
+**Date :** 11 septembre 2026
 
 > **Avertissement légal :** Ce rapport est réalisé dans un cadre pédagogique strictement contrôlé. L'application cible est un environnement Docker isolé, intentionnellement vulnérable (OWASP Juice Shop). Toute reproduction de ces techniques sur un système réel sans autorisation écrite est illégale et passible de poursuites.
 
@@ -43,6 +43,7 @@ Cette évaluation est conduite dans le rôle de **Cybersecurity Analyst / Junior
 | URL hôte (lab) | `http://localhost:3000` |
 | Réseau Docker | `172.20.0.0/24` — isolé |
 | Dépôt de référence | `https://github.com/devmail0561-web/labs_sec_data` |
+| Outil HDWP | HDWP v4.0 — Hypothesis-Driven Web Pentesting Engine |
 
 ### 1.3 Périmètre
 
@@ -76,6 +77,7 @@ Les tests suivent la méthodologie **OWASP Testing Guide v4.2** (OTG), structur�
 |-------|------|-------|
 | Scripts Bash custom (`test_*.sh`, `exploit_*.sh`) | Tests automatisés | Détection + exploitation ciblée |
 | OWASP ZAP 2.14 (ghcr.io/zaproxy/zaproxy:stable) | DAST | Spider + scan actif de l'application |
+| HDWP v4.0 (devmail0561-web/hdwp) | DAST sémantique | Analyse dynamique par falsification d'hypothèses — détection de vulnérabilités par diff comportemental cross-role |
 | Semgrep (règles `p/owasp-top-ten`, `p/javascript`) | SAST | Analyse statique du code source |
 | `npm audit` | SCA | Audit des dépendances Node.js |
 | trufflehog / gitleaks | Secret Detection | Détection de secrets dans le code |
@@ -99,12 +101,13 @@ Les conteneurs sont démarrés via `docker compose up -d` depuis `lab1-jenkins/`
 - **10 août 2026** : Exécution des phases détection et exploitation (Lab 2 — résultats EXP-01 à EXP-05)
 - **14 août 2026** : Exécution du pipeline Jenkins complet (Lab 1 — Build #21, commit `9190f06`)
 - **10 septembre 2026** : Rédaction du rapport final d'examen et mise en place des remédiations
+- **11 septembre 2026** : Scan HDWP automatisé (91 findings, session SESSION-086e746e) — identification de V10 et V11
 
 ---
 
 ## 3. Vulnérabilités identifiées
 
-Neuf vulnérabilités ont été identifiées et confirmées lors de l'évaluation.
+Onze vulnérabilités ont été identifiées et confirmées lors de l'évaluation.
 
 | ID | Vulnérabilité | Composant | CWE | OWASP 2021 | CVSS | Criticité |
 |----|--------------|-----------|-----|------------|------|-----------|
@@ -117,6 +120,8 @@ Neuf vulnérabilités ont été identifiées et confirmées lors de l'évaluatio
 | V7 | Mass Assignment — Escalade de privilège | `PUT /api/Users/:id`, `POST /api/Users` | CWE-915 | A08 | 8.8 | **Critical** |
 | V8 | Méthodes HTTP dangereuses actives (TRACE, DELETE, PUT) | Serveur HTTP | CWE-16 | A05 | 5.8 | Medium |
 | V9 | Absence de rate limiting sur le login | `POST /rest/user/login` | CWE-307 | A07 | 7.3 | **High** |
+| V10 | JWT Algorithm None Bypass | Validation JWT | CWE-347 | A02 | 8.2 | **High** |
+| V11 | Broken Function Level Authorization (5 endpoints) | `/api/Complaints`, `/rest/wallet/balance`, `/api/BasketItems`, `/api/Cards`, `/rest/image-captcha/` | CWE-284 | A01 | 7.6 | **High** |
 
 ### Détail des vulnérabilités
 
@@ -300,6 +305,48 @@ CONNECT→ HTTP 000  ✅ Bloqué
 
 ---
 
+#### V10 — JWT Algorithm None Bypass (CWE-347)
+
+**Description :** L'application accepte des tokens JWT dont le champ `alg` est défini à `"none"`, ce qui permet de forger des tokens sans connaître la clé de signature. Un attaquant peut créer un JWT administrateur valide sans aucune clé secrète.
+
+**Découverte :** Détecté automatiquement par HDWP (scan du 11/09/2026, session SESSION-086e746e) via le plugin `core.session_property.jwt` — mutation `jwt_manipulation` de type `alg_none`. HDWP a falsifié l'hypothèse « le serveur rejette les tokens avec alg=none » en envoyant un token manipulé et en observant un HTTP 200.
+
+**Confiance HDWP :** 95% (reproductibilité 1.00, force oracle 0.95, spécificité comportementale 0.95)
+
+**Preuves :**
+- Expériences HDWP : EXP-4a7bd886, EXP-4d948905, EXP-83c9e2a2
+- Diff sémantique : DIFF-c91dd4c7
+
+**Impact :** Un attaquant peut forger un JWT avec n'importe quel `role` et `id` sans connaître la clé RSA privée, contournant complètement l'authentification. Combiné avec V2, cela constitue un deuxième vecteur d'accès administrateur indépendant.
+
+**Remédiation recommandée :** Forcer la validation de l'algorithme JWT côté serveur — rejeter tout token dont `alg` n'est pas exactement `RS256`. Configurer `jsonwebtoken.verify()` avec `{ algorithms: ['RS256'] }`.
+
+---
+
+#### V11 — Broken Function Level Authorization (CWE-284)
+
+**Description :** Cinq endpoints de l'API retournent HTTP 200 pour des rôles non autorisés, révélant un contrôle d'accès insuffisant au niveau fonctionnel (Broken Function Level Authorization — BFLA).
+
+**Découverte :** Détecté automatiquement par HDWP via le plugin `core.authorization.authz` — mutation `privilege_escalation`. HDWP a comparé les réponses obtenues avec le rôle `customer` versus `admin` et a identifié que des endpoints réservés aux administrateurs sont accessibles aux utilisateurs standard.
+
+**Endpoints affectés (confirmés par diff cross-role HDWP) :**
+
+| Endpoint | Rôle testé | Résultat | Attendu |
+|----------|-----------|----------|---------|
+| `GET /api/Complaints` | customer | HTTP 200 | HTTP 403 |
+| `GET /rest/wallet/balance` | customer | HTTP 200 | HTTP 403 |
+| `GET /api/BasketItems` | customer | HTTP 200 | HTTP 403 |
+| `GET /api/Cards` | customer | HTTP 200 | HTTP 403 |
+| `GET /rest/image-captcha/` | customer | HTTP 200 | HTTP 403 |
+
+**Confiance HDWP :** 93% (reproductibilité 1.00, force oracle 0.90, spécificité comportementale 0.95)
+
+**Impact :** Un utilisateur standard peut accéder aux plaintes de tous les utilisateurs, aux soldes de portefeuille, aux articles de paniers et aux cartes de paiement enregistrées. Cela constitue une violation de la confidentialité des données clients.
+
+**Remédiation recommandée :** Implémenter un middleware de vérification de rôle (`requireRole('admin')`) sur chaque endpoint administrateur, distinct du middleware d'authentification.
+
+---
+
 ## 4. Classification CWE
 
 | ID | CWE | Titre complet | Lien OWASP Top 10 2021 |
@@ -313,13 +360,15 @@ CONNECT→ HTTP 000  ✅ Bloqué
 | V6 | CWE-200 | Exposure of Sensitive Information to an Unauthorized Actor | A02 — Cryptographic Failures |
 | V7 | CWE-915 | Improperly Controlled Modification of Dynamically-Determined Object Attributes | A08 — Software and Data Integrity Failures |
 | V9 | CWE-307 | Improper Restriction of Excessive Authentication Attempts | A07 — Identification and Authentication Failures |
+| V10 | CWE-347 | Improper Verification of Cryptographic Signature | A02 — Cryptographic Failures |
+| V11 | CWE-284 | Improper Access Control | A01 — Broken Access Control |
 
 ### Répartition par catégorie OWASP
 
 | Catégorie OWASP 2021 | Vulnérabilités |
 |---------------------|----------------|
-| A01 — Broken Access Control | V3 (IDOR), V4 (Path Traversal) |
-| A02 — Cryptographic Failures | V6 (Data Exposure) |
+| A01 — Broken Access Control | V3 (IDOR), V4 (Path Traversal), V11 (BFLA) |
+| A02 — Cryptographic Failures | V6 (Data Exposure), V10 (JWT alg_none) |
 | A03 — Injection | V2 (SQLi), V5 (XSS) |
 | A05 — Security Misconfiguration | V1 (Headers), V8 (Méthodes) |
 | A07 — Identification Failures | V9 (Rate Limiting) |
@@ -344,6 +393,8 @@ Pour chaque vulnérabilité, l'impact est évalué selon les trois propriétés 
 | V5 | XSS Stocké | **Oui** | Possible | Non | **High** | Vol de sessions (si cookies non HttpOnly), redirection, phishing persistant |
 | V6 | Data Exposure | **Oui** | Non | Non | **High** | Clés OAuth exposées, données utilisateurs (UserId, feedbacks) |
 | V9 | Absence Rate Limiting | Possible | Possible | Non | **High** | Brute force facilité ; si couplé à V2, exploitation accélérée |
+| V10 | JWT alg_none | **Oui** | **Oui** | Non | **High** | Forge de tokens → même impact que V2 si combiné avec escalade de rôle |
+| V11 | BFLA (5 endpoints) | **Oui** | Possible | Non | **High** | Données clients (plaintes, soldes, cartes) accessibles par tous les utilisateurs authentifiés |
 | V1 | Headers manquants | Possible | Non | Non | Medium | Facilite XSS (pas de CSP) et MITM (pas de HSTS) |
 | V8 | TRACE actif | Possible | Non | Non | Medium | XST potentiellement exploitable avec XSS pour vol de cookies HttpOnly |
 
@@ -496,7 +547,7 @@ Le pipeline Jenkins (`Jenkinsfile`) est structuré en **6 étapes** conformémen
         ↓
 3. Security Analysis        ← SAST (Semgrep) + SCA (npm audit)
         ↓
-4. Additional Security Check ← DAST (OWASP ZAP) + Secret Detection (trufflehog)
+4. Additional Security Check ← DAST (OWASP ZAP + HDWP) + Secret Detection (trufflehog)
         ↓
 5. Report Generation
         ↓
@@ -558,6 +609,23 @@ curl "$ZAP/JSON/spider/action/scan/?apikey=$KEY&url=$TARGET"
 curl "$ZAP/JSON/ascan/action/scan/?apikey=$KEY&url=$TARGET&recurse=true"
 ```
 
+#### DAST sémantique — HDWP (étape 4)
+
+| Critère | Détail |
+|---------|--------|
+| **Type d'analyse** | Dynamique sémantique — modélise l'application, dérive des propriétés de sécurité formelles, puis les falsifie par des expériences comportementales |
+| **Vulnérabilités détectées** | JWT manipulation (CWE-347), Broken Access Control cross-role (CWE-284), Missing Security Headers (CWE-693/346/116), BOLA/IDOR, CSRF, Mass Assignment |
+| **Différence avec ZAP** | HDWP raisonne par hypothèses falsifiables et diff cross-role (anonymous vs customer vs admin) au lieu de fuzzing par signatures. Il détecte les vulnérabilités de logique d'autorisation que ZAP ne peut pas trouver. |
+| **Limites** | Requiert une configuration de rôles (JWT par rôle) ; ne couvre pas les vulnérabilités purement statiques (code source) ; la couverture dépend des endpoints découverts par le crawler |
+| **Moment dans le pipeline** | Étape 4 — après le démarrage de l'application, en parallèle avec ZAP |
+
+```bash
+hdwp run --context juiceshop-hdwp-context.yaml --no-tui --db sqlite+aiosqlite:///evidence.db
+hdwp report --db sqlite+aiosqlite:///evidence.db --format json --output reports/hdwp/
+```
+
+**Résultat du scan (11/09/2026) :** 91 findings — HIGH: 10, MEDIUM: 27, LOW: 27, INFO: 27. Confiance moyenne : 95.8%.
+
 #### Secret Detection — trufflehog (étape 4)
 
 | Critère | Détail |
@@ -599,6 +667,8 @@ trufflehog filesystem /lab/app --json > "${REPORT_DIR}/secrets_scan.json"
 | Path Traversal + Null Byte `/ftp/` | CWE-22/CWE-626 | 7.5 | **High** | 🟠 Correction requise avant tout déploiement |
 | Absence de rate limiting login | CWE-307 | 7.3 | **High** | 🟠 Correction requise avant tout déploiement |
 | XSS Stocké — Feedbacks | CWE-79 | 7.2 | **High** | 🟠 Correction requise avant tout déploiement |
+| JWT Algorithm None Bypass | CWE-347 | 8.2 | **High** | 🟠 Correction requise avant tout déploiement |
+| Broken Function Level Authorization (5 endpoints) | CWE-284 | 7.6 | **High** | 🟠 Correction requise avant tout déploiement |
 | TRACE / méthodes dangereuses | CWE-16 | 5.8 | Medium | 🟡 Correction planifiée — sprint suivant |
 | En-têtes de sécurité manquants | CWE-16 | 5.3 | Medium | 🟡 Correction planifiée — peut être fait rapidement (helmet.js) |
 
@@ -606,12 +676,12 @@ trufflehog filesystem /lab/app --json > "${REPORT_DIR}/secrets_scan.json"
 
 | Sévérité | Nombre | Proportion |
 |----------|--------|-----------|
-| Critical | 2 | 22% |
-| High | 5 | 56% |
-| Medium | 2 | 22% |
+| Critical | 2 | 18% |
+| High | 7 | 64% |
+| Medium | 2 | 18% |
 | Low | 0 | — |
 
-**7 des 9 vulnérabilités identifiées sont de sévérité High ou Critical.**
+**9 des 11 vulnérabilités identifiées sont de sévérité High ou Critical.**
 
 ---
 
@@ -629,7 +699,7 @@ Deux vulnérabilités de sévérité **Critical** (CVSS ≥ 9.0) n'ont pas été
 
 2. **Mass Assignment (CVSS 8.8)** — Exploitation partiellement confirmée : le champ `role` est accepté par l'API sans filtrage, permettant une élévation de privilège auto-administrée. Tout utilisateur peut devenir administrateur sans autorisation.
 
-De plus, **5 vulnérabilités High** non corrigées (IDOR, Data Exposure, Path Traversal, Rate Limiting, XSS) aggravent le risque global et augmentent la surface d'attaque.
+De plus, **7 vulnérabilités High** non corrigées (IDOR, Data Exposure, Path Traversal, Rate Limiting, XSS, JWT alg_none, BFLA) aggravent le risque global et augmentent la surface d'attaque.
 
 **Conditions pour Accept with Conditions :**
 - Correction et vérification de V2 (SQLi) et V7 (Mass Assignment) — bloquants absolus
@@ -642,11 +712,13 @@ De plus, **5 vulnérabilités High** non corrigées (IDOR, Data Exposure, Path T
 
 ### 10.1 Synthèse
 
-Cette évaluation a identifié **9 vulnérabilités** couvrant 6 des 10 catégories du Top 10 OWASP 2021. Les vulnérabilités les plus critiques — l'injection SQL (CVSS 9.8) et le Mass Assignment (CVSS 8.8) — permettent respectivement d'obtenir un accès administrateur complet sans aucun identifiant, et de créer des comptes avec des privilèges élevés.
+Cette évaluation a identifié **11 vulnérabilités** couvrant 6 des 10 catégories du Top 10 OWASP 2021. Les vulnérabilités les plus critiques — l'injection SQL (CVSS 9.8) et le Mass Assignment (CVSS 8.8) — permettent respectivement d'obtenir un accès administrateur complet sans aucun identifiant, et de créer des comptes avec des privilèges élevés.
 
 La chaîne d'exploitation démontrée (SQLi → JWT admin → accès API protégées → exfiltration de données) illustre concrètement pourquoi une seule vulnérabilité critique peut suffire à compromettre la totalité d'un système.
 
 Les remédiations implémentées (requêtes paramétrées, middleware d'autorisation, whitelist de champs) sont techniquement solides et alignées avec les recommandations de l'OWASP ASVS v4.0. Le pipeline Jenkins automatise désormais 4 types de contrôles de sécurité (SAST, SCA, DAST, Secret Detection) et notifie l'équipe à chaque exécution.
+
+Le scan HDWP a apporté une couverture complémentaire significative : la détection du bypass JWT alg_none (V10) et de 5 endpoints avec contrôle d'accès défaillant (V11) n'avait pas été identifiée par les outils classiques (ZAP, Semgrep) ni par les tests manuels. Cela illustre la valeur d'une approche sémantique basée sur la falsification d'hypothèses pour détecter les vulnérabilités de logique d'autorisation.
 
 ---
 
@@ -666,6 +738,24 @@ Dans notre évaluation, la vulnérabilité V7 (Mass Assignment, CVSS 8.8) n'est 
 
 **L'analyse humaine reste indispensable.** La sécurité applicative ne peut pas être réduite à un processus entièrement automatisable. Un attaquant humain raisonne par objectif (obtenir des données administrateurs, contourner un paiement, extraire des PII) et explore des chemins que les outils automatiques ne parcourent pas. L'analyse manuelle apporte la compréhension du contexte métier, l'enchaînement logique des vulnérabilités, et l'évaluation de l'impact réel.
 
+**La complémentarité des outils est démontrée dans cette évaluation.** Le tableau suivant illustre quelles vulnérabilités ont été détectées par chaque outil :
+
+| Vulnérabilité | Tests manuels | Semgrep (SAST) | ZAP (DAST) | HDWP (DAST sémantique) |
+|--------------|:---:|:---:|:---:|:---:|
+| V1 — Missing Headers | ✅ | ❌ | ✅ | ✅ (27 findings CWE-693) |
+| V2 — SQL Injection | ✅ | ✅ | ✅ | ❌ (allow_write=false) |
+| V3 — IDOR | ✅ | ❌ | ❌ | Partiel (lié à V11) |
+| V4 — Path Traversal | ✅ | ✅ | ❌ | ❌ |
+| V5 — XSS Stocké | ✅ | ✅ | ✅ | ❌ (allow_write=false) |
+| V6 — Data Exposure | ✅ | ❌ | ✅ | ❌ |
+| V7 — Mass Assignment | ✅ | ❌ | ❌ | ❌ (allow_write=false) |
+| V8 — TRACE actif | ✅ | ❌ | ✅ | ❌ |
+| V9 — Rate Limiting | ✅ | ❌ | ❌ | ❌ |
+| V10 — JWT alg_none | ❌ | ❌ | ❌ | **✅ (5 findings, 95%)** |
+| V11 — BFLA (5 endpoints) | ❌ | ❌ | ❌ | **✅ (5 findings, 93%)** |
+
+Aucun outil seul ne couvre l'ensemble des vulnérabilités. Les tests manuels ont la meilleure couverture (9/11 = 82%) mais ne détectent pas V10 et V11. HDWP apporte une valeur unique sur les vulnérabilités de logique d'autorisation grâce à son approche cross-role, mais ne teste pas les vulnérabilités nécessitant des requêtes d'écriture (SQLi, XSS, Mass Assignment) car le scan a été exécuté en mode `allow_write: false`.
+
 **Conclusion sur l'analyse critique :** Un pipeline de sécurité automatisé tel que celui implémenté ici constitue une couche de défense robuste et indispensable — il garantit une vérification systématique à chaque commit et réduit significativement la surface d'exposition. Mais il doit être complété par des revues de code humaines, des tests d'intrusion périodiques, et une culture de sécurité chez les développeurs. La sécurité est un processus continu, pas un état atteignable par un unique scan.
 
 ---
@@ -678,6 +768,8 @@ Dans notre évaluation, la vulnérabilité V7 (Mass Assignment, CVSS 8.8) n'est 
 | P1 | Corriger V7 (Mass Assignment) — whitelist de champs | Élimine l'escalade de privilège |
 | P2 | Corriger V3 (IDOR) — middleware d'autorisation | Protège les données de tous les utilisateurs |
 | P2 | Corriger V4 (Path Traversal) — supprimer `/ftp/` de la racine web | Empêche l'exfiltration de fichiers internes |
+| P1 | Corriger V10 (JWT alg_none) — forcer RS256 côté serveur, rejeter `alg: "none"` | Élimine le contournement d'authentification par token forgé |
+| P2 | Corriger V11 (BFLA) — middleware RBAC sur les 5 endpoints admin exposés | Empêche l'accès non autorisé aux fonctions d'administration |
 | P2 | Implémenter rate limiting (express-rate-limit) | Protège contre brute force |
 | P3 | Déployer helmet.js + config Nginx | Ajoute les headers de sécurité manquants |
 | P3 | Désactiver TRACE au niveau Nginx | Élimine le vecteur XST |
@@ -686,5 +778,5 @@ Dans notre évaluation, la vulnérabilité V7 (Mass Assignment, CVSS 8.8) n'est 
 
 ---
 
-*Rapport rédigé le 10 septembre 2026*  
+*Rapport rédigé le 11 septembre 2026*  
 *Évaluation de sécurité — OWASP Juice Shop — UNCHK Licence Cybersécurité*

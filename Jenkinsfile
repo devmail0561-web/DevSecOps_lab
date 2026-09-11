@@ -225,6 +225,28 @@ except: print('  (résultat non parsable JSON)')
         //   - Scan actif peut être bruyant et perturber l'application
         // Moment : étape 4, après démarrage de l'application (runtime)
         //
+        // DAST Sémantique — HDWP (Hypothesis-Driven Web Pentesting)
+        // Outil : HDWP v4.0 (développé en interne)
+        // Type  : DAST sémantique piloté par hypothèses — chaque
+        //         plugin formule des hypothèses sur le comportement
+        //         attendu et génère des expériences pour les valider
+        // Vulnérabilités détectées :
+        //   - JWT Algorithm None Bypass (CWE-347) — forge de tokens
+        //     sans signature via alg="none"
+        //   - BFLA (CWE-284) — élévation de privilèges par diff
+        //     cross-role (anonymous → customer → admin)
+        //   - CSP absente (CWE-693), COOP manquant (CWE-346)
+        //   - Referrer-Policy non configuré (CWE-116)
+        // Forces par rapport à ZAP :
+        //   - Analyse multi-rôle native avec diff comportemental
+        //   - Scoring ML de confiance (pas de faux positifs > 90%)
+        //   - Test JWT sémantique (alg confusion, claim tampering)
+        //   - Mode read-only (allow_write: false) — aucune injection
+        // Limites :
+        //   - Ne fait pas de fuzzing actif (complémentaire à ZAP)
+        //   - Requiert un fichier de contexte YAML par cible
+        // Moment : étape 4, après démarrage de l'application (runtime)
+        //
         // Secret Detection
         // Outil : trufflehog ou gitleaks
         // Type  : Détection de secrets dans le code et l'historique Git
@@ -319,6 +341,61 @@ except: print('  (résultat non parsable JSON)')
                     post {
                         failure { echo "[DAST] L'analyse dynamique a détecté des vulnérabilités" }
                         success { echo "[DAST] Analyse dynamique terminée" }
+                    }
+                }
+                stage('DAST Sémantique — HDWP') {
+                    steps {
+                        catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                            sh '''
+                                echo "[HDWP] Lancement du scan sémantique HDWP v4.0"
+                                HDWP_DB="${REPORT_DIR}/hdwp_evidence.db"
+                                HDWP_CONTEXT="/lab/hdwp/juiceshop-hdwp-context.yaml"
+
+                                if command -v hdwp >/dev/null 2>&1 && [ -f "$HDWP_CONTEXT" ]; then
+                                    echo "[HDWP] Scan headless multi-rôle (anonymous, customer, admin)"
+                                    hdwp run \
+                                        --context "$HDWP_CONTEXT" \
+                                        --no-tui \
+                                        --db "sqlite:///${HDWP_DB}" \
+                                        2>&1 | tail -20
+
+                                    echo "[HDWP] Génération du rapport"
+                                    hdwp report \
+                                        --db "sqlite:///${HDWP_DB}" \
+                                        --format json \
+                                        --output "${REPORT_DIR}/hdwp_findings.json"
+                                    hdwp report \
+                                        --db "sqlite:///${HDWP_DB}" \
+                                        --format md \
+                                        --output "${REPORT_DIR}/hdwp_report.md"
+
+                                    echo "[HDWP] Résumé :"
+                                    python3 -c "
+import json
+with open('${REPORT_DIR}/hdwp_findings.json') as f:
+    data = json.load(f)
+findings = data if isinstance(data, list) else data.get('findings', [])
+by_sev = {}
+for f in findings:
+    s = f.get('severity', 'UNKNOWN')
+    by_sev[s] = by_sev.get(s, 0) + 1
+print(f'  Total findings : {len(findings)}')
+for s in ['HIGH', 'MEDIUM', 'LOW', 'INFO']:
+    if s in by_sev:
+        print(f'  {s:8s} : {by_sev[s]}')
+print(f'  Avg confidence : {sum(f.get(\"confidence\",0) for f in findings)/max(len(findings),1):.1f}%')
+" 2>/dev/null || true
+                                else
+                                    echo "[HDWP] hdwp non installé ou contexte absent — skip"
+                                    echo '{"info":"HDWP non disponible dans cet environnement"}' \
+                                        > "${REPORT_DIR}/hdwp_findings.json"
+                                fi
+                            '''
+                        }
+                    }
+                    post {
+                        failure { echo "[HDWP] Le scan sémantique a détecté des vulnérabilités" }
+                        success { echo "[HDWP] Analyse sémantique HDWP terminée" }
                     }
                 }
                 stage('Secret Detection — trufflehog/gitleaks') {
@@ -458,7 +535,37 @@ with open('${REPORT_DIR}/npm_audit.json') as f:
                     fi
                     echo ""
 
-                    echo "=== SECTION 4 : Secret Detection ==="
+                    echo "=== SECTION 4 : DAST Sémantique (HDWP) ==="
+                    if [ -f "${REPORT_DIR}/hdwp_findings.json" ]; then
+                        python3 -c "
+import json
+with open('${REPORT_DIR}/hdwp_findings.json') as f:
+    data = json.load(f)
+if 'info' in data if isinstance(data, dict) else False:
+    print(data['info'])
+else:
+    findings = data if isinstance(data, list) else data.get('findings', [])
+    by_sev = {}
+    for f in findings:
+        s = f.get('severity', 'UNKNOWN')
+        by_sev[s] = by_sev.get(s, 0) + 1
+    print(f'HDWP Findings : {len(findings)}')
+    for s in ['HIGH', 'MEDIUM', 'LOW', 'INFO']:
+        if s in by_sev:
+            print(f'  {s:8s} : {by_sev[s]}')
+    high_findings = [f for f in findings if f.get('severity') == 'HIGH']
+    for f in high_findings:
+        cwe = f.get('cwe', '?')
+        title = f.get('title', f.get('hypothesis', '?'))[:60]
+        conf = f.get('confidence', 0)
+        print(f'  [HIGH] CWE-{cwe} — {title} (conf: {conf}%)')
+" 2>/dev/null || echo "HDWP: voir ${REPORT_DIR}/hdwp_findings.json"
+                    else
+                        echo "HDWP non exécuté dans ce build"
+                    fi
+                    echo ""
+
+                    echo "=== SECTION 5 : Secret Detection ==="
                     if [ -f "${REPORT_DIR}/secrets_scan.json" ]; then
                         python3 -c "
 import json
@@ -475,7 +582,7 @@ with open('${REPORT_DIR}/secrets_scan.json') as f:
                     fi
                     echo ""
 
-                    echo "=== SECTION 5 : Tests d'exploitation personnalisés ==="
+                    echo "=== SECTION 6 : Tests d'exploitation personnalisés ==="
                     for report in "${REPORT_DIR}"/*_report.txt; do
                         [ -f "$report" ] || continue
                         echo "--- $(basename $report) ---"
@@ -486,23 +593,27 @@ with open('${REPORT_DIR}/secrets_scan.json') as f:
                     echo ""
                     echo "=== RÉSUMÉ DES VULNÉRABILITÉS DÉTECTÉES ==="
                     echo ""
-                    echo "ID  | Vulnérabilité                 | CWE     | CVSS | Sévérité"
-                    echo "----|-------------------------------|---------|------|----------"
-                    echo "V1  | Missing Security Headers      | CWE-16  | 5.3  | Medium"
-                    echo "V2  | SQL Injection (login)         | CWE-89  | 9.8  | Critical"
-                    echo "V3  | IDOR (baskets)                | CWE-639 | 8.1  | High"
-                    echo "V4  | Path Traversal + Null Byte    | CWE-22  | 7.5  | High"
-                    echo "V5  | Stored XSS (feedbacks)        | CWE-79  | 7.2  | High"
-                    echo "V6  | Sensitive Data Exposure       | CWE-200 | 7.5  | High"
-                    echo "V7  | Mass Assignment (role)        | CWE-915 | 8.8  | High"
-                    echo "V8  | Dangerous HTTP Methods        | CWE-16  | 5.3  | Medium"
-                    echo "V9  | No Rate Limiting (login)      | CWE-307 | 7.3  | High"
+                    echo "ID  | Vulnérabilité                 | CWE     | CVSS | Sévérité  | Outil"
+                    echo "----|-------------------------------|---------|------|-----------|----------"
+                    echo "V1  | Missing Security Headers      | CWE-16  | 5.3  | Medium    | ZAP/curl"
+                    echo "V2  | SQL Injection (login)         | CWE-89  | 9.8  | Critical  | Semgrep+curl"
+                    echo "V3  | IDOR (baskets)                | CWE-639 | 8.1  | High      | curl"
+                    echo "V4  | Path Traversal + Null Byte    | CWE-22  | 7.5  | High      | curl"
+                    echo "V5  | Stored XSS (feedbacks)        | CWE-79  | 7.2  | High      | Semgrep+curl"
+                    echo "V6  | Sensitive Data Exposure       | CWE-200 | 7.5  | High      | curl"
+                    echo "V7  | Mass Assignment (role)        | CWE-915 | 8.8  | High      | curl"
+                    echo "V8  | Dangerous HTTP Methods        | CWE-16  | 5.3  | Medium    | curl"
+                    echo "V9  | No Rate Limiting (login)      | CWE-307 | 7.3  | High      | curl"
+                    echo "V10 | JWT Algorithm None Bypass      | CWE-347 | 8.2  | High      | HDWP"
+                    echo "V11 | BFLA (5 endpoints)             | CWE-284 | 7.6  | High      | HDWP"
                     echo ""
                     echo "=== DÉCISION DE DÉPLOIEMENT ==="
                     echo "[REJECT DEPLOYMENT]"
-                    echo "Raison : V2 (SQLi, CVSS 9.8) et V7 (Mass Assignment, CVSS 8.8)"
+                    echo "Raison : V2 (SQLi, CVSS 9.8), V7 (Mass Assignment, CVSS 8.8),"
+                    echo "         V10 (JWT alg_none, CVSS 8.2) et V11 (BFLA, CVSS 7.6)"
                     echo "         constituent des risques critiques incompatibles avec"
                     echo "         une mise en production."
+                    echo "Total : 11 vulnérabilités (1 Critical, 8 High, 2 Medium)"
                     echo ""
                     echo "============================================================"
                     echo " FIN DU RAPPORT — Build #${BUILD_NUMBER}"
@@ -591,13 +702,17 @@ with open('${REPORT_DIR}/secrets_scan.json') as f:
   <tr><td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">OWASP ZAP</td>
       <td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">DAST</td>
       <td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">4 — Additional Security Check</td></tr>
+  <tr><td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">HDWP v4.0</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">DAST Sémantique</td>
+      <td style="padding:6px 12px;border-bottom:1px solid #dee2e6;">4 — Additional Security Check</td></tr>
   <tr><td style="padding:6px 12px;">trufflehog / gitleaks</td>
       <td style="padding:6px 12px;">Secret Detection</td>
       <td style="padding:6px 12px;">4 — Additional Security Check</td></tr>
 </table>
 
 <h3 style="color:#dc3545;">Décision de déploiement : REJECT</h3>
-<p>9 vulnérabilités détectées dont 1 Critical (SQLi, CVSS 9.8) et 2 High (CVSS ≥ 8.0).
+<p>11 vulnérabilités détectées dont 1 Critical (SQLi, CVSS 9.8) et 8 High (CVSS ≥ 7.0).
+HDWP a identifié 2 vulnérabilités supplémentaires : JWT Algorithm None (CWE-347) et BFLA (CWE-284).
 L'application ne peut pas être mise en production dans son état actuel.</p>
 
 <p style="color:#6c757d;font-size:12px;margin-top:20px;">
