@@ -1,3 +1,6 @@
+# Rapports (ne pas committer)
+reports/
+
 # Fichiers temporaires
 *.log
 *.tmp
